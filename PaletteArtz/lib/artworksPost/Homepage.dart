@@ -29,50 +29,45 @@ class _HomepageState extends State<Homepage> {
   }
 
   final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            child: Container(
-              margin: EdgeInsets.all(5.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(
-                        item,
-                        fit: BoxFit.cover,
-                        width: 500.0,
-                      ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'No. ${imgList.indexOf(item)} image',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
+      .map(
+        (item) => Container(
+          child: Container(
+            margin: EdgeInsets.all(5.0),
+            child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image.network(
+                      item,
+                      fit: BoxFit.cover,
+                      width: 500.0,
+                    ),
+                    Positioned(
+                      child: Container(
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Fantasy',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
-                    ],
-                  )),
-            ),
-          ))
+                    ),
+                  ],
+                )),
+          ),
+        ),
+      )
       .toList();
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -152,14 +147,17 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
             ),
-            Center(
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+                bottom: 2.0,
+              ),
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 15.0),
-                height: 100,
                 child: CarouselSlider(
                   options: CarouselOptions(
-                    autoPlay: false,
-                    aspectRatio: 2.0,
+                    autoPlay: true,
+                    aspectRatio: 3.0,
                     enlargeCenterPage: true,
                   ),
                   items: imageSliders,
@@ -169,23 +167,31 @@ class _HomepageState extends State<Homepage> {
             Padding(
               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: Container(
-                decoration: BoxDecoration(
+                decoration: new BoxDecoration(
                   color: purpleG,
                   shape: BoxShape.rectangle,
-                  border: new Border.all(
-                    color: purpleG,
-                    width: 1.0,
+                  gradient: LinearGradient(
+                    colors: [
+                      pinkG,
+                      lightPurple,
+                      purpleG,
+                      blueG,
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
                   child: new TextField(
+                    cursorColor: Colors.white,
                     decoration: new InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
                       hintText: 'Search',
-                      hintStyle: TextStyle(
-                        color: Colors.white,
-                      ),
+                      hintStyle: TextStyle(color: Colors.white),
                       suffixIcon: Icon(
                         Icons.search_outlined,
                         color: Colors.white,
@@ -195,7 +201,148 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
             ),
-            Container()
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Container(
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    aspectRatio: 3.0,
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.scale,
+                  ),
+                  items: [],
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 15.0,
+                  right: 15.0,
+                  bottom: 10.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Explore Artworks',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: 100,
+                    minWidth: 100,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/winter_by_serayune_dejy5jd-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/winter_by_serayune_dejy5jd-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/winter_by_serayune_dejy5jd-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/winter_by_serayune_dejy5jd-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg',
+                            width: 130,
+                          ),
+                          Image.asset(
+                            'assets/img/winter_by_serayune_dejy5jd-fullview.jpg',
+                            width: 130,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
