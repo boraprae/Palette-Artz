@@ -216,8 +216,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                               colorFilter: new ColorFilter.mode(
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
-                              image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                              image: AssetImage('assets/img/1138718.png'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -249,7 +248,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/deph8gr-d8b959ae-d743-47d5-9cc6-5f42bb1dd0c8.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -283,8 +282,8 @@ class _ChanelsPageState extends State<ChanelsPage> {
                               colorFilter: new ColorFilter.mode(
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
-                              image: AssetImage(
-                                  'assets/img/cm__blake_by_serayune_deqcznm-fullview.jpg'),
+                              image:
+                                  AssetImage('assets/img/EyZEIOSXIAQNxu6.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -316,7 +315,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/longing_by_serayune_deniqw0-fullview.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -325,7 +324,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'DRAWING & PATNING',
+                              'DRAWING \n& PATNING',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,
@@ -351,7 +350,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/paulinaapc-art-harry-potter-paulinaapc-by-paulinaapc-dbezine.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -383,7 +382,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/7d8bee4c00e0ddfc7c3d67d6344626d1.png'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -418,7 +417,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/2653d50e5ba1742c6e53225d15939811.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -450,7 +449,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/lantern_by_serayune_denad78-fullview.jpg'),
+                                  'assets/img/46983ac2735f0638f13da1f11a2dc513.jpg'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
@@ -485,7 +484,7 @@ class _ChanelsPageState extends State<ChanelsPage> {
                                   Colors.black.withOpacity(0.5),
                                   BlendMode.dstATop),
                               image: AssetImage(
-                                  'assets/img/red_dragon_by_pinlin_dep08bi-fullview.jpg'),
+                                  'assets/img/depmte1-796558b7-300a-4047-b5db-51b5fdf8d459.png'),
                               fit: BoxFit.cover),
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(5.0),
