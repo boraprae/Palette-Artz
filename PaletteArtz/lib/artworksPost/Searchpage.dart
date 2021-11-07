@@ -29,6 +29,31 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: bgBlack,
       appBar: AppBar(
+        title: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[900],
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: TextField(
+            cursorColor: Colors.white,
+            style: TextStyle(color: Colors.white),
+            decoration: new InputDecoration(
+              prefixIcon: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.white,
+              ),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintText: 'Search',
+              hintStyle: TextStyle(
+                color: Colors.grey[700],
+              ),
+            ),
+          ),
+        ),
         backgroundColor: bgBlack,
         automaticallyImplyLeading: true,
         bottom: TabBar(
