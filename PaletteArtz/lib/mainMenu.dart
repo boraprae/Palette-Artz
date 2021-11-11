@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
+import 'package:paletteartz/walletPage/walletPage.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -18,6 +19,13 @@ class _MainMenuState extends State<MainMenu> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _onItemTapped(3); // for testing
   }
 
   @override
@@ -89,11 +97,9 @@ class _MainMenuState extends State<MainMenu> {
             child: Text('Add your class replace this container'),
           ),
           //wallet page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          WalletPage(),
           //profile page class
-         MainProfile(),
+          MainProfile(),
         ]),
       ),
     );
