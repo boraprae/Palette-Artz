@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 // import 'package:paletteartz/welcomePage.dart';
 
 void main() {
