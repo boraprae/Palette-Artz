@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksPost/postDetail.dart';
 import 'package:paletteartz/constantColor.dart';
+import 'package:paletteartz/profliePage/shared/listImg.dart';
 
 class MainProfile extends StatefulWidget {
   const MainProfile({Key? key}) : super(key: key);
@@ -9,6 +11,7 @@ class MainProfile extends StatefulWidget {
 }
 
 class _MainProfileState extends State<MainProfile> {
+  
   double totalArtwork = 270;
   double totalLikes = 1300;
   double totalFollower = 4900;
@@ -21,29 +24,41 @@ class _MainProfileState extends State<MainProfile> {
 
   final List<PhotoItem> _items = [
     PhotoItem(
-        "https://images.pexels.com/photos/1772973/pexels-photo-1772973.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Stephan Seeber"),
+      "assets/img/uploadedImg/01.jpg",
+      "Arai",
+      "Sara Yune",
+      "Sep 15, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
     PhotoItem(
-        "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Liam Gant"),
+      "assets/img/uploadedImg/02.jpg",
+      "Mai roo",
+      "Stephan Seeber",
+      "Sep 4, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
     PhotoItem(
-        "https://images.pexels.com/photos/1772973/pexels-photo-1772973.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Stephan Seeber"),
-    PhotoItem(
-        "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Liam Gant"),
-    PhotoItem(
-        "https://images.pexels.com/photos/1772973/pexels-photo-1772973.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Stephan Seeber"),
-    PhotoItem(
-        "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Liam Gant"),
-    PhotoItem(
-        "https://images.pexels.com/photos/1772973/pexels-photo-1772973.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Stephan Seeber"),
-    PhotoItem(
-        "https://images.pexels.com/photos/1758531/pexels-photo-1758531.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "Liam Gant"),
+      "assets/img/uploadedImg/03.png",
+      "55555",
+      "Stephan Seeber",
+      "Sep 4, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
   ];
 
   @override
@@ -203,7 +218,7 @@ class _MainProfileState extends State<MainProfile> {
                 //Gallery
                 Container(
                   width: size.width,
-                  height: size.height,
+                  height: size.height * 0.8,
                   child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisSpacing: 1,
@@ -214,12 +229,23 @@ class _MainProfileState extends State<MainProfile> {
                     itemBuilder: (context, index) {
                       // Item rendering
                       return new GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          print(index);
+                          print(_items[index]);
+                          // Navigator.pushNamed(context, '/postDetail');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PostDetail(),
+                              settings: RouteSettings(arguments: _items[index]),
+                            ),
+                          );
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(_items[index].image),
+                              image: AssetImage(_items[index].image),
                             ),
                           ),
                         ),
@@ -268,10 +294,4 @@ Widget textForm(totalNumber, typeText) {
       ),
     ],
   );
-}
-
-class PhotoItem {
-  final String image;
-  final String name;
-  PhotoItem(this.image, this.name);
 }
