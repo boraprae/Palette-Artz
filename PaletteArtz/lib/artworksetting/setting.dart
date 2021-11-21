@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/constantColor.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,13 +10,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: bgBlack,
       appBar: AppBar(
         title: Text(
           'Settings',
           // style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         backgroundColor: Colors.black,
       ),
       body: Padding(
@@ -23,11 +23,37 @@ class _ProfileState extends State<Profile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://icons.iconarchive.com/icons/diversity-avatars/avatars/512/batman-icon.png'),
-                radius: 40,
+            Container(
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://icons.iconarchive.com/icons/diversity-avatars/avatars/512/batman-icon.png'),
+                    radius: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      "Plaette Artz name :",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "SaraYune",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(
+                      Icons.create,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
               ),
             ),
             Divider(
@@ -38,37 +64,57 @@ class _ProfileState extends State<Profile> {
               'Application Settings',
               style: TextStyle(color: Colors.grey),
             ),
-            Text(
-              'Change Password',
-              style: TextStyle(color: Colors.yellow, fontSize: 22),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.vpn_key,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '  Change Password',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
             ),
             SizedBox(height: 10),
             Text(
               'Others',
               style: TextStyle(color: Colors.grey),
             ),
-            Text(
-              'Transactions history',
-              style: TextStyle(color: Colors.yellow, fontSize: 22),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.lock_clock_rounded,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '  Transactions history',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              'Log out',
-              style: TextStyle(color: Colors.yellow, fontSize: 22),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    '   Log out',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
-            Row(
-              children: [
-                Icon(
-                  Icons.mail,
-                  color: Colors.grey,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'noonelefthide@gmail.com',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ),
           ],
         ),
       ),
