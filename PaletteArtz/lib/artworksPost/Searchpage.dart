@@ -10,13 +10,7 @@ class Searchpage extends StatefulWidget {
 
 class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
   late TabController _tabController;
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+ 
 
   @override
   void initState() {
@@ -34,22 +28,21 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
             color: Colors.grey[900],
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: TextField(
-            cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white),
-            decoration: new InputDecoration(
-              prefixIcon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-              ),
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              hintText: 'Search',
-              hintStyle: TextStyle(
-                color: Colors.grey[700],
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: TextField(
+              cursorColor: Colors.white,
+              style: TextStyle(color: Colors.white),
+              decoration: new InputDecoration(
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                hintText: 'Search',
+                hintStyle: TextStyle(
+                  color: Colors.grey[700],
+                ),
               ),
             ),
           ),
@@ -67,44 +60,6 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
               text: 'Arttists',
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: new Theme(
-        data: Theme.of(context)
-            .copyWith(canvasColor: bgBlack, primaryColor: bgBlack),
-        child: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.storefront,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_box_outlined,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance_wallet_outlined,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
-                label: ''),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: purpleG,
-          unselectedItemColor: Colors.white,
-          onTap: _onItemTapped,
         ),
       ),
       body: SafeArea(

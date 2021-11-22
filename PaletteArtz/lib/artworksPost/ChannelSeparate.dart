@@ -11,60 +11,17 @@ class SeparatePage extends StatefulWidget {
 }
 
 class _SeparatePageState extends State<SeparatePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       backgroundColor: bgBlack,
       appBar: AppBar(
         backgroundColor: bgBlack,
-        title: Text('ANIME FANART'), //! can chang name title but now hard code
+        title:
+            Text('${data['name']}'), //! can chang name title but now hard code
         automaticallyImplyLeading: true,
-      ),
-      bottomNavigationBar: new Theme(
-        data: Theme.of(context)
-            .copyWith(canvasColor: bgBlack, primaryColor: bgBlack),
-        child: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.storefront,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_box_outlined,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance_wallet_outlined,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
-                label: ''),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: purpleG,
-          unselectedItemColor: Colors.white,
-          onTap: _onItemTapped,
-        ),
       ),
       body: SafeArea(
         child: InstagramSearchGrid(),

@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksPost/Homepage.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
 
@@ -77,9 +76,7 @@ class _MainMenuState extends State<MainMenu> {
         ),
         body: TabBarView(children: [
           //home page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          Homepage(),
           //store page class
           Container(
             child: Text('Add your class replace this container'),
@@ -93,7 +90,7 @@ class _MainMenuState extends State<MainMenu> {
             child: Text('Add your class replace this container'),
           ),
           //profile page class
-         MainProfile(),
+          MainProfile(),
         ]),
       ),
     );
