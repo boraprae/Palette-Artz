@@ -92,10 +92,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PostDetail()));
+                            Navigator.pushNamed(context, '/SignInpage');
                           },
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(32, 48, 0, 0),

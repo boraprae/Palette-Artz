@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/login/SignInpage.dart';
+import 'package:paletteartz/login/SignUppage.dart';
 import 'package:paletteartz/welcomePage.dart';
 
 void main() {
@@ -8,6 +10,8 @@ void main() {
       initialRoute: '/welcome',
       routes: {
         '/welcome': (context) => WelcomePage(),
+        '/SignInpage': (context) => LoginPage(),
+        '/SignUppage': (context) => RegisterPage(),
       },
     ),
   );
