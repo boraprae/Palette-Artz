@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paletteartz/artworksPost/postDetail.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
 
@@ -11,7 +12,6 @@ class MainProfile extends StatefulWidget {
 }
 
 class _MainProfileState extends State<MainProfile> {
-  
   double totalArtwork = 270;
   double totalLikes = 1300;
   double totalFollower = 4900;
@@ -179,7 +179,13 @@ class _MainProfileState extends State<MainProfile> {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         width: size.width,
                         child: OutlineButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()),
+                            );
+                          },
                           icon: Icon(
                             Icons.settings,
                             color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 
 class change extends StatefulWidget {
@@ -81,7 +82,12 @@ class _changeState extends State<change> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0.0),
                       side: BorderSide(color: Colors.purple)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
+                  },
                   padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
                   color: bgBlack,
                   textColor: Colors.purple,

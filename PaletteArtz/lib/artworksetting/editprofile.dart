@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 
 class editprofile extends StatefulWidget {
@@ -10,6 +12,13 @@ class editprofile extends StatefulWidget {
 
 class _editprofileState extends State<editprofile> {
   @override
+  final _controller = TextEditingController();
+
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -37,6 +46,7 @@ class _editprofileState extends State<editprofile> {
                 ),
               ),
               TextField(
+                controller: _controller,
                 style: TextStyle(color: Colors.white),
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
@@ -125,7 +135,12 @@ class _editprofileState extends State<editprofile> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0.0),
                           side: BorderSide(color: Colors.purple)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Profile()),
+                        );
+                      },
                       padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
                       color: bgBlack,
                       textColor: Colors.purple,

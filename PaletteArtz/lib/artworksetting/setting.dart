@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/editprofile.dart';
 import 'package:paletteartz/constantColor.dart';
 
 class Profile extends StatefulWidget {
@@ -47,10 +49,17 @@ class _ProfileState extends State<Profile> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Icon(
-                      Icons.create,
+                    padding: const EdgeInsets.all(1.0),
+                    child: IconButton(
                       color: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => editprofile()),
+                        );
+                      },
+                      icon: Icon(Icons.create),
                     ),
                   )
                 ],
@@ -72,9 +81,17 @@ class _ProfileState extends State<Profile> {
                     Icons.vpn_key,
                     color: Colors.white,
                   ),
-                  Text(
-                    '  Change Password',
-                    style: TextStyle(color: Colors.white),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => change()),
+                      );
+                    },
+                    child: Text(
+                      '  Change Password',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )
                 ],
               ),

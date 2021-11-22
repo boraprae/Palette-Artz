@@ -79,7 +79,9 @@ class _MainMenuState extends State<MainMenu> {
           ),
         ),
         body: TabBarView(children: [
-          editprofile(),
+          Container(
+            child: Text('Add your class replace this container'),
+          ),
           //home page class
           Container(
             child: Text('Add your class replace this container'),
