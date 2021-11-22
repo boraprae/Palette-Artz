@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:paletteartz/mainMenu.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -130,6 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton(
                         onPressed: () {
                           print('1');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainMenu(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black,

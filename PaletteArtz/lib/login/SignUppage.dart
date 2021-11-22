@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(135, 30, 0, 0),
                               child: Text(
-                                'Sign in',
+                                'Sign up',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 36,
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
                             child: Text(
-                              'Sign in',
+                              'Sign up',
                               style: TextStyle(fontSize: 14),
                             ),
                           ),
