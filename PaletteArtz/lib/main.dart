@@ -4,6 +4,9 @@ import 'package:paletteartz/artworksPost/Channelspage.dart';
 import 'package:paletteartz/artworksPost/Searchpage.dart';
 import 'package:paletteartz/login/SignInpage.dart';
 import 'package:paletteartz/login/SignUppage.dart';
+import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
+// import 'package:paletteartz/welcomePage.dart';
 import 'package:paletteartz/artworksPost/postDetail.dart';
 import 'package:paletteartz/mainMenu.dart';
 import 'package:paletteartz/welcomePage.dart';
@@ -26,6 +29,8 @@ void main() {
         '/channelspage': (context) => ChanelsPage(),
         '/serach': (context) => Searchpage(),
         '/separate':(context) => SeparatePage(),
+        '/setting': (context) => Profile(),
+        '/change': (context) => change(),
       },
     ),
   );

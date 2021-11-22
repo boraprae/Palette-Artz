@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:paletteartz/artworksPost/addNewPost.dart';
 import 'package:paletteartz/artworksPost/Homepage.dart';
+import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/editprofile.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
 import 'package:paletteartz/walletPage/walletPage.dart';
