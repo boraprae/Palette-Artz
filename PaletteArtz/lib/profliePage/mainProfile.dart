@@ -16,6 +16,7 @@ class _MainProfileState extends State<MainProfile> {
   double totalLikes = 1300;
   double totalFollower = 4900;
   double totalFollowing = 512;
+
   String username = 'SaraYune';
   String bioText = 'Don’t follow your dream, just follow my arts';
   List userUnique = ['Anime', 'Fanart', 'Fantasy'];
@@ -87,7 +88,7 @@ class _MainProfileState extends State<MainProfile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      textForm(totalArtwork.toStringAsFixed(0), 'Artworks'),
+                      textForm(_items.length.toStringAsFixed(0), 'Artworks'),
                       textForm(totalLikes.toStringAsFixed(0), 'Likes'),
                       textForm(totalFollowing.toStringAsFixed(0), 'Follower'),
                       textForm(totalFollower.toStringAsFixed(0), 'Following'),
@@ -230,8 +231,8 @@ class _MainProfileState extends State<MainProfile> {
                       // Item rendering
                       return new GestureDetector(
                         onTap: () {
-                          print(index);
-                          print(_items[index]);
+                          // print(index);
+                          // print(_items[index]);
                           // Navigator.pushNamed(context, '/postDetail');
                           Navigator.push(
                             context,

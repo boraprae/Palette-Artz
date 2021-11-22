@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksPost/addNewPost.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
 
@@ -85,9 +86,7 @@ class _MainMenuState extends State<MainMenu> {
             child: Text('Add your class replace this container'),
           ),
           //add post class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          AddNewPost(),
           //wallet page class
           Container(
             child: Text('Add your class replace this container'),
