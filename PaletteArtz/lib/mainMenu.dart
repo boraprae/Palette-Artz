@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paletteartz/StoreGift/store.dart';
 import 'package:paletteartz/artworksPost/addNewPost.dart';
 import 'package:paletteartz/honepage/Homepage.dart';
 import 'package:paletteartz/artworksetting/change.dart';
@@ -90,9 +91,7 @@ class _MainMenuState extends State<MainMenu> {
           //home page class
           Homepage(),
           //store page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          Storegift(),
           //add post class
           AddNewPost(),
           //wallet page class

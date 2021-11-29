@@ -161,6 +161,7 @@ class _AddNewPostState extends State<AddNewPost> {
                         onChanged: (String? newValue) {
                           setState(() {
                             dropdownvalue = newValue!;
+                            print(dropdownvalue);
                           });
                         },
                       ),
@@ -171,7 +172,7 @@ class _AddNewPostState extends State<AddNewPost> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: TextFieldTags(
                     tagsStyler: TagsStyler(
-                      showHashtag: true,
+                      showHashtag: false,
                       tagMargin: const EdgeInsets.only(right: 4.0),
                       tagCancelIcon:
                           Icon(Icons.cancel, size: 15.0, color: Colors.white),

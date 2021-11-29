@@ -379,7 +379,8 @@ class _WalletPageState extends State<WalletPage> {
                     topRight: Radius.circular(10)),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 child: Column(
                   children: [
                     Row(
@@ -393,7 +394,9 @@ class _WalletPageState extends State<WalletPage> {
                               fontSize: 18),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/transaction');
+                          },
                           child: Text(
                             'See All',
                           ),
