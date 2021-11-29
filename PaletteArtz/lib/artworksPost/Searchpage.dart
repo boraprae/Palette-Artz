@@ -12,21 +12,7 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
   late TabController _tabController;
 
   List history = [
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
-    {'name': 'Phornwanat Boonman'},
+    
   ];
 
   @override
@@ -135,7 +121,9 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  setState(() {});
+                                  setState(() {
+                                    
+                                  });
                                 },
                                 child: Text(
                                   'Clear All',
