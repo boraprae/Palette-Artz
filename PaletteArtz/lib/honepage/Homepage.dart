@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/artworksPost/Channelspage.dart';
-import 'package:paletteartz/artworksPost/Searchpage.dart';
+import 'package:paletteartz/honepage/Channelspage.dart';
+import 'package:paletteartz/honepage/Searchpage.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

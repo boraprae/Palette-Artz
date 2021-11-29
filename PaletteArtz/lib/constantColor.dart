@@ -7,3 +7,4 @@ const blueG = Color(0xFF212F9C);
 const grayText = Color(0xFFA7A7A7);
 const lightPurple = Color(0xFFB84AB8);
 const darkLight = Color(0xFF292929);
+const lightGray = Color(0xFF353535);
