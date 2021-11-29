@@ -6,5 +6,4 @@ const purpleG = Color(0xFF7A2997);
 const blueG = Color(0xFF212F9C);
 const grayText = Color(0xFFA7A7A7);
 const lightPurple = Color(0xFFB84AB8);
-
-// test dev-kan initial commit
+const darkLight = Color(0xFF292929);

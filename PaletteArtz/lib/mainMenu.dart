@@ -1,6 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksPost/addNewPost.dart';
+import 'package:paletteartz/artworksPost/Homepage.dart';
+import 'package:paletteartz/artworksetting/change.dart';
+import 'package:paletteartz/artworksetting/editprofile.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
 import 'package:paletteartz/walletPage/walletPage.dart';
@@ -85,17 +88,13 @@ class _MainMenuState extends State<MainMenu> {
         ),
         body: TabBarView(children: [
           //home page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          Homepage(),
           //store page class
           Container(
             child: Text('Add your class replace this container'),
           ),
           //add post class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          AddNewPost(),
           //wallet page class
           WalletPage(),
           //profile page class

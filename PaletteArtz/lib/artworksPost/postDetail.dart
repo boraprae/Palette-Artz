@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
+import 'package:paletteartz/profliePage/mainProfile.dart';
+import 'package:paletteartz/profliePage/shared/listImg.dart';
 import 'package:paletteartz/welcomePage.dart';
 
 class PostDetail extends StatefulWidget {
@@ -10,14 +10,6 @@ class PostDetail extends StatefulWidget {
   @override
   _PostDetailState createState() => _PostDetailState();
 }
-
-String titlePost = '(cm) Blake';
-String pubDate = 'Sep 4, 2021';
-String captionPost =
-    'lineless commission for Panalee0819 \nthanks for commissioning';
-String totalComment = '0';
-String totalLikes = '1.2k';
-String username = 'SaraYune';
 
 class _PostDetailState extends State<PostDetail> {
   TextEditingController newComment = TextEditingController();
@@ -29,76 +21,41 @@ class _PostDetailState extends State<PostDetail> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final _items = ModalRoute.of(context)!.settings.arguments as PhotoItem;
+    String totalComment = '0';
+    String totalLikes = '1.2k';
+    String username = 'SaraYune';
+
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: bgBlack,
-      appBar: AppBar(
+    return DefaultTabController(
+      length: 5,
+      initialIndex: 4,
+      child: Scaffold(
         backgroundColor: bgBlack,
-        title: Text('Artworks'),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => WelcomePage())),
-        ),
-      ),
-      bottomNavigationBar: new Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: bgBlack,
-          primaryColor: bgBlack,
-        ),
-        child: BottomNavigationBar(
+        appBar: AppBar(
           backgroundColor: bgBlack,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.storefront,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.add_box_outlined,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_balance_wallet_outlined,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
-                label: ''),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: purpleG,
-          unselectedItemColor: Colors.white,
-          onTap: _onItemTapped,
+          title: Text('Artworks'),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
+        //tab bar wil paste here
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 0.4 * size.height,
+              width: size.width,
               child: Image.asset(
-                'assets/img/blake_by_serayune_deqcznm.jpg',
+                _items.image,
                 fit: BoxFit.fitWidth,
               ),
-              alignment: Alignment.topCenter,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
@@ -108,7 +65,7 @@ class _PostDetailState extends State<PostDetail> {
                   Row(
                     children: [
                       Text(
-                        titlePost,
+                        _items.imgTitle,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -120,7 +77,7 @@ class _PostDetailState extends State<PostDetail> {
                         color: pinkG,
                         padding: EdgeInsets.all(6.0),
                         child: Text(
-                          'Cute girl',
+                          _items.imgTag[0],
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 8,
@@ -134,7 +91,7 @@ class _PostDetailState extends State<PostDetail> {
                         color: pinkG,
                         padding: EdgeInsets.all(6.0),
                         child: Text(
-                          'Commissioning',
+                          _items.imgTag[1],
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 8,
@@ -150,7 +107,7 @@ class _PostDetailState extends State<PostDetail> {
                         CircleAvatar(
                           radius: 10.0,
                           backgroundImage: AssetImage(
-                            'assets/img/iu.jpg',
+                            'assets/img/winter.jpg',
                           ),
                         ),
                         Padding(
@@ -164,7 +121,7 @@ class _PostDetailState extends State<PostDetail> {
                           ),
                         ),
                         Text(
-                          'Published: $pubDate',
+                          _items.pubDate,
                           style: TextStyle(
                             fontSize: 12,
                             color: grayText,
@@ -174,7 +131,7 @@ class _PostDetailState extends State<PostDetail> {
                     ),
                   ),
                   Text(
-                    captionPost,
+                    _items.description,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
