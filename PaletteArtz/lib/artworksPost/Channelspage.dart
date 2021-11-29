@@ -31,11 +31,10 @@ class _ChanelsPageState extends State<ChanelsPage> {
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'ANIME & MANGA'
-                            }
-                          );
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{
+                                'name': 'ANIME & MANGA'
+                              });
                         },
                         child: Container(
                           height: 90,
@@ -71,12 +70,11 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'K-POP FANART'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{
+                                'name': 'K-POP FANART'
+                              });
                         },
                         child: Container(
                           height: 90,
@@ -115,12 +113,9 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'FANTASY'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{'name': 'FANTASY'});
                         },
                         child: Container(
                           height: 90,
@@ -156,12 +151,11 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'SERIES FANART'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{
+                                'name': 'SERIES FANART'
+                              });
                         },
                         child: Container(
                           height: 90,
@@ -200,12 +194,9 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'GAME ART'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{'name': 'GAME ART'});
                         },
                         child: Container(
                           height: 90,
@@ -241,12 +232,11 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'ILLUSARATION'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{
+                                'name': 'ILLUSARATION'
+                              });
                         },
                         child: Container(
                           height: 90,
@@ -285,12 +275,11 @@ class _ChanelsPageState extends State<ChanelsPage> {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'DIGITAL ART'
-                            }
-                          );
+                        onTap: () {
+                          Navigator.pushNamed(context, '/separate',
+                              arguments: <String, dynamic>{
+                                'name': 'DIGITAL ART'
+                              });
                         },
                         child: Container(
                           height: 90,
@@ -322,262 +311,6 @@ class _ChanelsPageState extends State<ChanelsPage> {
                         ),
                       ),
                     ),
-                    //* Use  this Container
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'DARWING/PATNING'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/17.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'DRAWING \n& PATNING',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'REALISM'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/16.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'REALISM',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    //* Use  this Container
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'SKETCH'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/15.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'SKETCH',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'TRADITIONAL ART'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/14.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'TRADITIONAL ART',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    //* Use  this Container
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'TUTORTALS'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/27.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'TUTORIALS',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                         onTap: () {
-                          Navigator.pushNamed(
-                            context,'/separate',arguments: <String, dynamic>{
-                              'name':'STREET ART'
-                            }
-                          );
-                        },
-                        child: Container(
-                          height: 90,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                                image:
-                                    AssetImage('assets/img/uploadedImg/26.jpg'),
-                                fit: BoxFit.cover),
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'STREET ART',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    //* Use  this Container
                   ],
                 ),
               ],
