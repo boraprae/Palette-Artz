@@ -12,13 +12,14 @@ import 'package:paletteartz/mainMenu.dart';
 import 'package:paletteartz/welcomePage.dart';
 import 'package:paletteartz/walletPage/walletPage.dart';
 import 'package:paletteartz/artworksPost/Homepage.dart';
+import 'package:paletteartz/transactionHistory/transactionHistory.dart';
 
 
 void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/welcome',
+      initialRoute: '/transaction',
       routes: {
         '/welcome': (context) => WelcomePage(),
         '/SignInpage': (context) => LoginPage(),
@@ -31,6 +32,7 @@ void main() {
         '/separate':(context) => SeparatePage(),
         '/setting': (context) => Profile(),
         '/change': (context) => change(),
+        '/transaction': (context) => TransactionPage(),
       },
     ),
   );
