@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/artworksPost/ChannelSeparate.dart';
+import 'package:paletteartz/honepage/ChannelSeparate.dart';
 import 'package:paletteartz/constantColor.dart';
 
 class ChanelsPage extends StatefulWidget {
