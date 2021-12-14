@@ -1,3 +1,4 @@
+import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
 
@@ -57,7 +58,13 @@ class _StoregiftState extends State<Storegift> {
                           SizedBox(
                             height: 20,
                           ),
-                          Text("SeraYune"),
+                          Text(
+                            "SeraYune",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           Row(
                             children: [
                               SizedBox(
@@ -65,16 +72,23 @@ class _StoregiftState extends State<Storegift> {
                               ),
                               Column(
                                 children: [
+                                  SizedBox(
+                                    height: 15,
+                                  ),
                                   Row(
                                     children: [
-                                      Text("Your balance"),
-                                      Text("12345"),
+                                      Text(
+                                        "Your balance: ",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      Text("Total purchase gift "),
-                                      Text("112")
+                                      Text(
+                                        "Total purchase gift: ",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -131,7 +145,32 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                  onPressed: () {
+                                    AlertDialog(
+                                      title: Text('Tulip'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Total 150฿"),
+                                          CustomNumberPicker(
+                                              onValue: (value) {},
+                                              initialValue: 0,
+                                              maxValue: 999,
+                                              minValue: 0,
+                                              step: 1)
+                                        ],
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () {},
+                                            child: Text('BUY'))
+                                      ],
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      primary: Colors.purple),
+                                  child: Text("150"))
                             ],
                           ),
                         ),
@@ -149,7 +188,34 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                onPressed: () {
+                                  AlertDialog(
+                                    title: Text('Tulip'),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("Total 150฿"),
+                                        CustomNumberPicker(
+                                            onValue: (value) {},
+                                            initialValue: 0,
+                                            maxValue: 999,
+                                            minValue: 0,
+                                            step: 1)
+                                      ],
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () {}, child: Text('BUY'))
+                                    ],
+                                  );
+                                },
+                                child: Text(
+                                  "150",
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    shape: StadiumBorder(),
+                                    primary: Colors.purple),
+                              ),
                             ],
                           ),
                         ),
@@ -167,7 +233,32 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                  onPressed: () {
+                                    AlertDialog(
+                                      title: Text('Tulip'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Total 150฿"),
+                                          CustomNumberPicker(
+                                              onValue: (value) {},
+                                              initialValue: 0,
+                                              maxValue: 999,
+                                              minValue: 0,
+                                              step: 1)
+                                        ],
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () {},
+                                            child: Text('BUY'))
+                                      ],
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      primary: Colors.purple),
+                                  child: Text("150"))
                             ],
                           ),
                         ),
@@ -192,7 +283,32 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                  onPressed: () {
+                                    AlertDialog(
+                                      title: Text('Tulip'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Total 150฿"),
+                                          CustomNumberPicker(
+                                              onValue: (value) {},
+                                              initialValue: 0,
+                                              maxValue: 999,
+                                              minValue: 0,
+                                              step: 1)
+                                        ],
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () {},
+                                            child: Text('BUY'))
+                                      ],
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      primary: Colors.purple),
+                                  child: Text("150"))
                             ],
                           ),
                         ),
@@ -210,7 +326,32 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                  onPressed: () {
+                                    AlertDialog(
+                                      title: Text('Tulip'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Total 150฿"),
+                                          CustomNumberPicker(
+                                              onValue: (value) {},
+                                              initialValue: 0,
+                                              maxValue: 999,
+                                              minValue: 0,
+                                              step: 1)
+                                        ],
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () {},
+                                            child: Text('BUY'))
+                                      ],
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      primary: Colors.purple),
+                                  child: Text("150"))
                             ],
                           ),
                         ),
@@ -228,7 +369,32 @@ class _StoregiftState extends State<Storegift> {
                                 ),
                               ),
                               ElevatedButton(
-                                  onPressed: () {}, child: Text("150"))
+                                  onPressed: () {
+                                    AlertDialog(
+                                      title: Text('Tulip'),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("Total 150฿"),
+                                          CustomNumberPicker(
+                                              onValue: (value) {},
+                                              initialValue: 0,
+                                              maxValue: 999,
+                                              minValue: 0,
+                                              step: 1)
+                                        ],
+                                      ),
+                                      actions: [
+                                        FlatButton(
+                                            onPressed: () {},
+                                            child: Text('BUY'))
+                                      ],
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      primary: Colors.purple),
+                                  child: Text("150"))
                             ],
                           ),
                         ),
