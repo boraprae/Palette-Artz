@@ -34,6 +34,7 @@ class _AddNewPostState extends State<AddNewPost> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //Add images button area
           SizedBox(
             height: 0.3 * size.height,
             width: size.width,
@@ -67,6 +68,7 @@ class _AddNewPostState extends State<AddNewPost> {
               ),
             ),
           ),
+          //Add title image area
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Column(
@@ -102,6 +104,7 @@ class _AddNewPostState extends State<AddNewPost> {
                 SizedBox(
                   height: 0.01 * size.height,
                 ),
+                //Add description area
                 Text(
                   'Description',
                   style: TextStyle(
@@ -161,6 +164,7 @@ class _AddNewPostState extends State<AddNewPost> {
                         onChanged: (String? newValue) {
                           setState(() {
                             dropdownvalue = newValue!;
+                            print(dropdownvalue);
                           });
                         },
                       ),
@@ -171,7 +175,7 @@ class _AddNewPostState extends State<AddNewPost> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: TextFieldTags(
                     tagsStyler: TagsStyler(
-                      showHashtag: true,
+                      showHashtag: false,
                       tagMargin: const EdgeInsets.only(right: 4.0),
                       tagCancelIcon:
                           Icon(Icons.cancel, size: 15.0, color: Colors.white),
