@@ -33,7 +33,9 @@ dependencies:
   custom_navigation_bar: ^0.8.2
   flutter_signin_button: ^2.0.0
   textfield_tags: ^1.4.2
-
+  http: ^0.13.4
+  image_picker: ^0.8.4+4
+  path_provider: ^2.0.8
 
 
 

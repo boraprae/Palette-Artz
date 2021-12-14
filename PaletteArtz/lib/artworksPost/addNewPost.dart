@@ -1,4 +1,11 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
@@ -24,6 +31,33 @@ class _AddNewPostState extends State<AddNewPost> {
     'Ilustration',
     'Digital Art'
   ];
+  // PickedFile? _imageFile;
+  // final ImagePicker _picker = ImagePicker();
+  File? _image;
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+
+      // final imageTemporary = File(image.path);
+      final imagePermanent = await saveImagePermanently(image.path);
+      print(imagePermanent);
+      setState(() {
+        this._image = imagePermanent;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  Future<File> saveImagePermanently(String imagePath) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final image = File('${directory.path}/$name');
+
+    return File(imagePath).copy(image.path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,39 +69,40 @@ class _AddNewPostState extends State<AddNewPost> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Add images button area
-          SizedBox(
-            height: 0.3 * size.height,
-            width: size.width,
-            child: TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: darkLight,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 0.05 * size.height,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Tap to select your artworks',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
+          Container(
+              height: 0.3 * size.height,
+              width: size.width,
+              decoration: BoxDecoration(color: darkLight),
+              child: _image != null
+                  ? Image.file(
+                      _image!,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : TextButton(
+                      onPressed: () => pickImage(),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_a_photo_outlined,
+                            size: 0.05 * size.height,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Tap to select your artworks',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
           //Add title image area
           Padding(
             padding: const EdgeInsets.all(32.0),
@@ -226,7 +261,7 @@ class _AddNewPostState extends State<AddNewPost> {
                       return null;
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
