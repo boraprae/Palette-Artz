@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/honepage/Channelspage.dart';
-import 'package:paletteartz/honepage/Searchpage.dart';
+import 'package:paletteartz/homepage/Channelspage.dart';
+import 'package:paletteartz/homepage/Searchpage.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -317,7 +317,7 @@ class _HomepageState extends State<Homepage> {
                           child: Image.asset(
                             'assets/img/uploadedImg/19.jpg',
                             height: 190,
-                            width: 170,
+                            width:200,
                             fit: BoxFit.cover,
                           ),
                         ),

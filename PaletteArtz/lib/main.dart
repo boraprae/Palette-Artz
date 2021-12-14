@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/honepage/ChannelSeparate.dart';
-import 'package:paletteartz/honepage/Channelspage.dart';
-import 'package:paletteartz/honepage/Homepage.dart';
-import 'package:paletteartz/honepage/Searchpage.dart';
+import 'package:paletteartz/homepage/ChannelSeparate.dart';
+import 'package:paletteartz/homepage/Channelspage.dart';
+import 'package:paletteartz/homepage/Homepage.dart';
+import 'package:paletteartz/homepage/Searchpage.dart';
 import 'package:paletteartz/login/SignInpage.dart';
 import 'package:paletteartz/login/SignUppage.dart';
 import 'package:paletteartz/artworksetting/change.dart';

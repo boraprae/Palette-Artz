@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paletteartz/StoreGift/store.dart';
 import 'package:paletteartz/artworksPost/addNewPost.dart';
-import 'package:paletteartz/honepage/Homepage.dart';
+import 'package:paletteartz/homepage/Homepage.dart';
 import 'package:paletteartz/artworksetting/change.dart';
 import 'package:paletteartz/artworksetting/editprofile.dart';
 import 'package:paletteartz/artworksetting/setting.dart';
