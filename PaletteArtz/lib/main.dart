@@ -17,7 +17,7 @@ import 'package:paletteartz/transactionHistory/transactionHistory.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+      MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/mainMenu',
       routes: {
