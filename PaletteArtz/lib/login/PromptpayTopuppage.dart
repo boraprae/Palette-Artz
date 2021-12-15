@@ -49,6 +49,7 @@ class _TopupPPState extends State<TopupPP> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.account_balance_wallet_outlined,
+                color: Colors.purple,
               ),
               label: '',
             ),
@@ -61,38 +62,55 @@ class _TopupPPState extends State<TopupPP> {
         ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset('assets/images/QRpp.jpg'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      height: 150,
-                      width: 300,
-                      color: Color(0xFFFF303030),
-                      child: Text(
-                        "Reciever Address ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFF303030),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      height: 130,
+                      width: 400,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Reciever Address ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
                         ),
                       ),
                     ),
                     Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFF161616),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       height: 75,
-                      width: 250,
-                      color: Color(0xFF161616),
-                      child: Text(
-                        "Reciever Address \n Promptpay's number : 098187703  \n Name : Palette Artz",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
+                      width: 375,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Promptpay's number : 098187703  \n Name : Palette Artz",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                              ),
+                            ),
+                            Icon(Icons.copy, color: Colors.white),
+                          ],
                         ),
                       ),
                     ),
@@ -106,15 +124,12 @@ class _TopupPPState extends State<TopupPP> {
             style: ElevatedButton.styleFrom(
               primary: Color(0xFFAB47BC),
               shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(15.0),
+                borderRadius: new BorderRadius.circular(7.0),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-              child: Text(
-                'Share QR Code',
-                style: TextStyle(fontSize: 14),
-              ),
+            child: Text(
+              'Share QR Code',
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ],
