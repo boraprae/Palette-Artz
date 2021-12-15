@@ -3,8 +3,10 @@ import 'package:paletteartz/homepage/Channelspage.dart';
 import 'package:paletteartz/homepage/Searchpage.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:paletteartz/profliePage/shared/listImg.dart';
+import 'package:paletteartz/artworksPost/postDetail.dart';
 
-final List<String> imgList = [
+final List<String> imgList = [     //! Array list image for use in Baner
   'assets/img/longing_by_serayu.jpg',
   'assets/img/blake_by_serayune_deqcznm.jpg'
 ];
@@ -20,12 +22,52 @@ class _HomepageState extends State<Homepage> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
-  List Channels = [
+  List Channels = [     //! Array use in Channels 
     {'image': '22.jpg', 'name': 'FANTASY'},
     {'image': '18.jpg', 'name': 'DIGITAL ART'},
     {'image': '19.jpg', 'name': 'ILLUSTARATION'},
     {'image': '20.jpg', 'name': 'GAME ART'},
     {'image': '21.jpg', 'name': 'SERIES FANART'},
+  ];
+
+  final List<PhotoItem> _items = [
+    PhotoItem(
+      "assets/img/uploadedImg/01.jpg",
+      "Arai",
+      "Sara Yune",
+      "Sep 15, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
+    PhotoItem(
+      "assets/img/uploadedImg/02.jpg",
+      "Mai roo",
+      "Stephan Seeber",
+      "Sep 4, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
+    PhotoItem(
+      "assets/img/uploadedImg/03.png",
+      "55555",
+      "Stephan Seeber",
+      "Sep 4, 2021",
+      "lineless commission for Panalee0819 thanks for commissioning",
+      [
+        'Anime',
+        'Fanart',
+      ],
+      '',
+    ),
+    
   ];
 
 //!######## Class SliderBanner ####################
@@ -157,7 +199,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
         color: bgBlack,
@@ -305,38 +347,42 @@ class _HomepageState extends State<Homepage> {
             SizedBox(
               height: 5.0,
             ),
+            // ! Container in Explore Artworks 
             Container(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Image.asset(
-                            'assets/img/uploadedImg/19.jpg',
-                            height: 190,
-                            width:200,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Image.asset(
-                          'assets/img/uploadedImg/21.jpg',
-                          height: 190,
-                          width: 200,
-                          fit: BoxFit.cover,
-                        )
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/img/uploadedImg/17.jpg',
-                      height: 200,
-                      width: 373,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+              width: size.width,
+              height: size.height * 0.8,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 1,
+                  crossAxisCount: 3,
                 ),
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  // Item rendering
+                  return new GestureDetector(
+                    onTap: () {
+                      // print(index);
+                      // print(_items[index]);
+                      // Navigator.pushNamed(context, '/postDetail');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PostDetail(),
+                          settings: RouteSettings(arguments: _items[index]),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(_items[index].image),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
