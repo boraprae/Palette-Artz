@@ -21,7 +21,6 @@ class _PostDetailState extends State<PostDetail> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final _items = ModalRoute.of(context)!.settings.arguments as PhotoItem;
@@ -43,6 +42,23 @@ class _PostDetailState extends State<PostDetail> {
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () => Navigator.pop(context),
           ),
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.search,
+                    size: 26.0,
+                  ),
+                )),
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Icon(Icons.more_vert),
+                )),
+          ],
         ),
         //tab bar wil paste here
         body: Column(
@@ -188,7 +204,7 @@ class _PostDetailState extends State<PostDetail> {
                       CircleAvatar(
                         radius: 10.0,
                         backgroundImage: AssetImage(
-                          'assets/img/iu.jpg',
+                          'assets/img/winter.jpg',
                         ),
                       ),
                       SizedBox(
