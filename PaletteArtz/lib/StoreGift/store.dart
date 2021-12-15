@@ -10,6 +10,55 @@ class Storegift extends StatefulWidget {
 }
 
 class _StoregiftState extends State<Storegift> {
+  var itemCount;
+  Widget itemStroe(String name, int price, String img) {
+    return Column(
+      children: [
+        Image.asset(img),
+        Text(
+          name,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              selectItem(name, price);
+            },
+            style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(), primary: Colors.purple),
+            child: Text('$price'))
+      ],
+    );
+  }
+
+  Future selectItem(String name, int price) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(name),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Total $price฿"),
+              CustomNumberPicker(
+                  onValue: (value) {
+                    print(value);
+                    itemCount = value;
+                  },
+                  initialValue: 0,
+                  maxValue: 999,
+                  minValue: 0,
+                  step: 1)
+            ],
+          ),
+          actions: [FlatButton(onPressed: () {}, child: Text('BUY'))],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -131,137 +180,9 @@ class _StoregiftState extends State<Storegift> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    AlertDialog(
-                                      title: Text('Tulip'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Total 150฿"),
-                                          CustomNumberPicker(
-                                              onValue: (value) {},
-                                              initialValue: 0,
-                                              maxValue: 999,
-                                              minValue: 0,
-                                              step: 1)
-                                        ],
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                            onPressed: () {},
-                                            child: Text('BUY'))
-                                      ],
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      primary: Colors.purple),
-                                  child: Text("150"))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  AlertDialog(
-                                    title: Text('Tulip'),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text("Total 150฿"),
-                                        CustomNumberPicker(
-                                            onValue: (value) {},
-                                            initialValue: 0,
-                                            maxValue: 999,
-                                            minValue: 0,
-                                            step: 1)
-                                      ],
-                                    ),
-                                    actions: [
-                                      FlatButton(
-                                          onPressed: () {}, child: Text('BUY'))
-                                    ],
-                                  );
-                                },
-                                child: Text(
-                                  "150",
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                    shape: StadiumBorder(),
-                                    primary: Colors.purple),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    AlertDialog(
-                                      title: Text('Tulip'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Total 150฿"),
-                                          CustomNumberPicker(
-                                              onValue: (value) {},
-                                              initialValue: 0,
-                                              maxValue: 999,
-                                              minValue: 0,
-                                              step: 1)
-                                        ],
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                            onPressed: () {},
-                                            child: Text('BUY'))
-                                      ],
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      primary: Colors.purple),
-                                  child: Text("150"))
-                            ],
-                          ),
-                        ),
+                        itemStroe('Neno', 500, 'assets/img/toppng5.png'),
+                        itemStroe('Champ', 700, 'assets/img/toppng5.png'),
+                        itemStroe('Karn', 5000, 'assets/img/toppng5.png'),
                       ]),
                   SizedBox(
                     height: 20,
@@ -269,135 +190,9 @@ class _StoregiftState extends State<Storegift> {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    AlertDialog(
-                                      title: Text('Tulip'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Total 150฿"),
-                                          CustomNumberPicker(
-                                              onValue: (value) {},
-                                              initialValue: 0,
-                                              maxValue: 999,
-                                              minValue: 0,
-                                              step: 1)
-                                        ],
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                            onPressed: () {},
-                                            child: Text('BUY'))
-                                      ],
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      primary: Colors.purple),
-                                  child: Text("150"))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    AlertDialog(
-                                      title: Text('Tulip'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Total 150฿"),
-                                          CustomNumberPicker(
-                                              onValue: (value) {},
-                                              initialValue: 0,
-                                              maxValue: 999,
-                                              minValue: 0,
-                                              step: 1)
-                                        ],
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                            onPressed: () {},
-                                            child: Text('BUY'))
-                                      ],
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      primary: Colors.purple),
-                                  child: Text("150"))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: 120,
-                          height: 100,
-                          color: bgBlack,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/img/toppng5.png'),
-                              Text(
-                                "Tulip",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    AlertDialog(
-                                      title: Text('Tulip'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("Total 150฿"),
-                                          CustomNumberPicker(
-                                              onValue: (value) {},
-                                              initialValue: 0,
-                                              maxValue: 999,
-                                              minValue: 0,
-                                              step: 1)
-                                        ],
-                                      ),
-                                      actions: [
-                                        FlatButton(
-                                            onPressed: () {},
-                                            child: Text('BUY'))
-                                      ],
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      shape: StadiumBorder(),
-                                      primary: Colors.purple),
-                                  child: Text("150"))
-                            ],
-                          ),
-                        ),
+                        itemStroe('Neno', 500, 'assets/img/toppng5.png'),
+                        itemStroe('Neno', 500, 'assets/img/toppng5.png'),
+                        itemStroe('Neno', 500, 'assets/img/toppng5.png'),
                       ]),
                 ],
               ),
