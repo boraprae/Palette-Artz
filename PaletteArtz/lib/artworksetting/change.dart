@@ -10,6 +10,34 @@ class change extends StatefulWidget {
 }
 
 class _changeState extends State<change> {
+  Widget passwordChange(String head, String tfield) {
+    TextEditingController tfield = TextEditingController();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Text(
+            head,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+        TextField(
+          controller: tfield,
+          style: TextStyle(color: Colors.white),
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,80 +51,43 @@ class _changeState extends State<change> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            child: Text(
-              'Current Password',
-              style: TextStyle(color: Colors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            passwordChange("Current Password", ""),
+            passwordChange("New Password", ""),
+            passwordChange("Confirm New Password", ""),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          TextField(
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            child: Text(
-              'New Password',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextField(
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            child: Text(
-              'Confirm New Password',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          TextField(
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.all(10),
-                height: 50.0,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(color: Colors.purple)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  },
-                  padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
-                  color: bgBlack,
-                  textColor: Colors.purple,
-                  child: Text("Save", style: TextStyle(fontSize: 15)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(10),
+                  height: 50.0,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0),
+                        side: BorderSide(color: Colors.purple)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Profile()),
+                      );
+                    },
+                    padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
+                    color: bgBlack,
+                    textColor: Colors.purple,
+                    child: Text("Save", style: TextStyle(fontSize: 15)),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ]),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
