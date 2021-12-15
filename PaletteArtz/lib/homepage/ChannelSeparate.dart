@@ -41,8 +41,13 @@ class _InstagramSearchGridState extends State<InstagramSearchGrid> {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 2,
       itemCount: imageList.length,
-      itemBuilder: (context, index) => ImageCard(
-        imageData: imageList[index],
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          // print(index);
+        },
+        child: ImageCard(
+          imageData: imageList[index],
+        ),
       ),
       staggeredTileBuilder: (index) => StaggeredTile.count(
           (index % 8 == 0) ? 2 : 1, (index % 8 == 0) ? 2 : 1),
