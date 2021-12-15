@@ -42,7 +42,6 @@ class _AddNewPostState extends State<AddNewPost> {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-
       // final imageTemporary = File(image.path);
       final imagePermanent = await saveImagePermanently(image.path);
       setState(() {
@@ -205,7 +204,10 @@ class _AddNewPostState extends State<AddNewPost> {
                           return styleItem.map((String styleItem) {
                             return Text(
                               styleItem,
-                              style: const TextStyle(color: Colors.white54),
+                              style: const TextStyle(
+                                color: Colors.white54,
+                                fontSize: 12,
+                              ),
                             );
                           }).toList();
                         },
@@ -275,7 +277,7 @@ class _AddNewPostState extends State<AddNewPost> {
                       validator: (String tag) {
                         print('validator: $tag');
                         if (tag.length > 10) {
-                          return "Sorry, you can't add more.";
+                          return "Sorry, you can't longer than that.";
                         }
                         return null;
                       },
