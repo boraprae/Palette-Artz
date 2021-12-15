@@ -24,10 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_slider: ^4.0.0
-  flutter_number_picker:
-      git: https://github.com/phuongtinhbien/flutter_number_picker.git
  
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -38,6 +35,7 @@ dependencies:
   http: ^0.13.4
   image_picker: ^0.8.4+4
   path_provider: ^2.0.8
+  flutter_number_picker: ^1.0.4
 
 
 
