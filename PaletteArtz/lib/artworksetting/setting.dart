@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/artworksetting/change.dart';
-import 'package:paletteartz/artworksetting/editprofile.dart';
+import 'package:paletteartz/artworksetting/changePassword.dart';
+import 'package:paletteartz/artworksetting/editProfile.dart';
 import 'package:paletteartz/constantColor.dart';
 
 class Profile extends StatefulWidget {
@@ -9,6 +9,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  String username = 'SaraYune';
+  String profileImg = 'assets/img/winter.jpg';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,122 +18,144 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text(
           'Settings',
-          // style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: bgBlack,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/editProfile');
+              },
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://icons.iconarchive.com/icons/diversity-avatars/avatars/512/batman-icon.png'),
+                    backgroundImage: AssetImage(
+                      profileImg,
+                    ),
                     radius: 40,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      "Plaette Artz name :",
-                      style: TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Plaette Artz name",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        ),
+                        Text(
+                          username,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        "SaraYune",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: IconButton(
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => editprofile()),
-                        );
-                      },
-                      icon: Icon(Icons.create),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Divider(
-              color: Colors.grey,
-              height: 60,
-            ),
-            Text(
-              'Application Settings',
-              style: TextStyle(color: Colors.grey),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
+                  Spacer(),
                   Icon(
-                    Icons.vpn_key,
+                    Icons.create,
                     color: Colors.white,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => change()),
-                      );
-                    },
-                    child: Text(
-                      '  Change Password',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Text(
+                'Application Settings',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/changePassword');
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16,),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.vpn_key_sharp,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'Change Password',
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
+                ),
+              ),
+            ),
             Text(
               'Others',
-              style: TextStyle(color: Colors.grey),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.lock_clock_rounded,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '  Transactions history',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/transaction');
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.lock_clock_rounded,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'Transactions history',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            //!---- Log out tap need to connect with logout function -----!
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/welcome');
+              },
               child: Row(
                 children: [
                   Icon(
                     Icons.exit_to_app,
                     color: Colors.white,
                   ),
+                  SizedBox(
+                    width: 5,
+                  ),
                   Text(
-                    '   Log out',
+                    'Log out',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
