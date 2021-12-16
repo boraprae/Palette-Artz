@@ -130,13 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                       //button sign in
                       ElevatedButton(
                         onPressed: () {
-                          print('1');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainMenu(),
-                            ),
-                          );
+                          Navigator.pushNamed(context, '/MainMenu');
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black,

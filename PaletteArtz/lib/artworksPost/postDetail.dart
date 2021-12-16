@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
-import 'package:paletteartz/profliePage/mainProfile.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
-import 'package:paletteartz/welcomePage.dart';
 
 class PostDetail extends StatefulWidget {
   const PostDetail({Key? key}) : super(key: key);
@@ -21,13 +19,365 @@ class _PostDetailState extends State<PostDetail> {
     });
   }
 
+  int itemCount = 0;
+  bool showTextAlert = false;
+  bool selectedItem = false;
+  String textAlert = 'Please select the item first';
+  String selectedItemText = 'You don\'t select any gift yet.';
+  String itemName = '';
+
+  String totalComment = '0';
+  String totalLikes = '1.2k';
+  String username = 'SaraYune';
+
+  //!------- List of items(Update after connect to the db) ------!
+  List giftStore = [
+    {
+      "itemName": "Gift Box",
+      "itemAmount": 50,
+      "itemImg": "assets/img/gift1.png"
+    },
+    {
+      "itemName": "Mistletoe",
+      "itemAmount": 30,
+      "itemImg": "assets/img/gift2.png"
+    },
+    {
+      "itemName": "Butterfly",
+      "itemAmount": 10,
+      "itemImg": "assets/img/gift3.png"
+    },
+    {
+      "itemName": "Rainbow",
+      "itemAmount": 15,
+      "itemImg": "assets/img/gift4.png"
+    },
+    {
+      "itemName": "Crown",
+      "itemAmount": 7,
+      "itemImg": "assets/img/gift5.png",
+    },
+    {
+      "itemName": "Diamond",
+      "itemAmount": 19,
+      "itemImg": "assets/img/gift6.png"
+    },
+  ];
+
+  void getName(String name) {
+    setState(() {
+      itemName = name;
+    });
+  }
+
+  //*---------- Item store for sale -----------*
+  Widget itemStore(String name, int amount, String img, var setState) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          itemCount = 0;
+          selectedItemText = 'You\'re selecting $name';
+          getName(name);
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              child: Image.asset(
+                img,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            Text(
+              '$name',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+            Text(
+              '$amount pieces',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //* ----- Modal Bottom Sheet for give an item -----
+  Future selectItem() async {
+    return await showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(20.0),
+          ),
+        ),
+        backgroundColor: lightGray,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Container(
+                height: 0.5 * MediaQuery.of(context).size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                      child: Text(
+                        'Select Gifts',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Divider(color: grayText),
+                    //!--- Center area ----
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          itemStore(
+                            giftStore[0]['itemName'],
+                            giftStore[0]['itemAmount'],
+                            giftStore[0]['itemImg'],
+                            setState,
+                          ),
+                          itemStore(
+                            giftStore[1]['itemName'],
+                            giftStore[1]['itemAmount'],
+                            giftStore[1]['itemImg'],
+                            setState,
+                          ),
+                          itemStore(
+                            giftStore[2]['itemName'],
+                            giftStore[2]['itemAmount'],
+                            giftStore[2]['itemImg'],
+                            setState,
+                          ),
+                        ]),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        itemStore(
+                          giftStore[3]['itemName'],
+                          giftStore[3]['itemAmount'],
+                          giftStore[3]['itemImg'],
+                          setState,
+                        ),
+                        itemStore(
+                          giftStore[4]['itemName'],
+                          giftStore[4]['itemAmount'],
+                          giftStore[4]['itemImg'],
+                          setState,
+                        ),
+                        itemStore(
+                          giftStore[5]['itemName'],
+                          giftStore[5]['itemAmount'],
+                          giftStore[5]['itemImg'],
+                          setState,
+                        ),
+                      ],
+                    ),
+                    Divider(color: grayText),
+                    //*--- Add amount area ---
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(
+                                  selectedItemText,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 35,
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border:
+                                              Border.all(color: Colors.white),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '$itemCount',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      //?--- Remove Item button ---
+                                      Positioned(
+                                        right: 115,
+                                        child: ClipOval(
+                                          child: Material(
+                                            color: pinkG, // Button color
+                                            child: InkWell(
+                                              splashColor:
+                                                  lightPurple, // Splash color
+                                              onTap: () {
+                                                setState(() {
+                                                  if (itemCount > 0) {
+                                                    itemCount -= 1;
+                                                  } else {
+                                                    textAlert = 'You decrese for what? It\'s still zero!';
+                                                    showTextAlert = true;
+                                                  }
+                                                });
+                                              },
+                                              child: SizedBox(
+                                                width: 35,
+                                                height: 35,
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      //?--- End of remove item button ---
+                                      //? ---- Add item button ----
+                                      Positioned(
+                                        left: 115,
+                                        child: ClipOval(
+                                          child: Material(
+                                            color: pinkG, // Button color
+                                            child: InkWell(
+                                              splashColor:
+                                                  lightPurple, // Splash color
+                                              onTap: () {
+                                                setState(() {
+                                                  itemCount += 1;
+                                                  showTextAlert = false;
+                                                });
+                                              },
+                                              child: SizedBox(
+                                                width: 35,
+                                                height: 35,
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      //? ---- End of add item button ----
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(86, 0, 8, 0),
+                                child: TextButton(
+                                  onPressed: () {
+                                    //!---- after pressed send button ---
+                                    sendItem(itemName, itemCount, setState);
+                                  },
+                                  child: Text(
+                                    'Send',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Visibility(
+                            visible: showTextAlert,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      textAlert,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  //!---- After pressed send botton -----
+  void sendItem(String itemName, int totalItem, var setState) {
+    setState(() {
+      if (itemName == null || itemName == '') {
+        textAlert = 'Please select the item first';
+        showTextAlert = true;
+      } else if (totalItem <= 0) {
+        textAlert = 'Hey! How about the amount dude!';
+        showTextAlert = true;
+      } else {
+        print("**This is an item which you selected na :)**");
+        print("Item name: $itemName, Total: $totalItem");
+        Navigator.pop(context);
+      }
+    });
+
+    //?-- waiting for kranny ;-; --?
+  }
+
   @override
   Widget build(BuildContext context) {
     final _items = ModalRoute.of(context)!.settings.arguments as PhotoItem;
-    String totalComment = '0';
-    String totalLikes = '1.2k';
-    String username = 'SaraYune';
-
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 5,
@@ -46,17 +396,31 @@ class _PostDetailState extends State<PostDetail> {
             Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.search,
-                    size: 26.0,
+                  onTap: () {
+                    selectedItemText = 'You don\'t select any gift yet.';
+                    itemCount = 0;
+                    selectItem();
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.redeem,
+                        size: 26.0,
+                        color: purpleG,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'SEND GIFT',
+                        style: TextStyle(
+                          color: purpleG,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                )),
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.more_vert),
                 )),
           ],
         ),
@@ -228,12 +592,6 @@ class _PostDetailState extends State<PostDetail> {
                               color: grayText,
                               fontSize: 12,
                             ),
-                            // disabledBorder: OutlineInputBorder(
-                            //   borderRadius: BorderRadius.circular(5.0),
-                            //   borderSide: BorderSide(
-                            //     color: grayText,
-                            //   ),
-                            // ),
                           ),
                         ),
                       ),
