@@ -1,8 +1,13 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -12,160 +17,183 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  bool showPassword = false;
-  @override
-  final _controller = TextEditingController();
+  String username = 'SaraYune';
+  String bioText = 'Don’t follow your dream, just follow my arts';
+  List userUnique = ['Anime', 'Fanart', 'Fantasy'];
+  String profileImg = 'assets/img/winter.jpg';
+  String profileCoverImg = 'assets/img/longing_by_serayu.jpg';
+  String phoneNum = '0123456789';
+  String userEmail = 'gmail@seraYune.com';
+  String gender = 'Female';
 
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  TextEditingController tagController = TextEditingController();
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(String labelText, String placeholder, var controller) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
+      padding: const EdgeInsets.only(bottom: 24.0),
       child: TextField(
+        controller: controller,
         style: TextStyle(
           color: Colors.white,
         ),
         cursorColor: Colors.white,
-        obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-            ),
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            labelStyle: TextStyle(color: Colors.white),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            )),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          contentPadding: EdgeInsets.only(bottom: 3),
+          labelText: labelText,
+          labelStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintText: placeholder,
+          hintStyle: TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("editProfile"),
+        title: Text("Edit Profile"),
         backgroundColor: Colors.black,
       ),
       backgroundColor: bgBlack,
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Container(
-              width: double.maxFinite,
-              height: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg'),
-                    fit: BoxFit.cover),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: ClipRRect(
-                  child: Stack(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://icons.iconarchive.com/icons/diversity-avatars/avatars/512/batman-icon.png'),
-                        radius: 40,
-                      ),
-                      Positioned(
-                        child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //**------ profile cover image ---**
+                Container(
+                  height: 0.2 * size.height,
+                  width: size.width,
+                  child: Image.asset(
+                    profileCoverImg,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 60, 32, 8),
+                  child: Column(
+                    children: [
+                      buildTextField('Name', username, usernameController),
+                      buildTextField('Email', userEmail, emailController),
+                      buildTextField(
+                          "Phone Number", phoneNum, phoneNumberController),
+                      buildTextField("Gender", gender, genderController),
+                      buildTextField("Bio", bioText, bioController),
+                      buildTextField("Art Style", userUnique[0], tagController),
+                      SizedBox(
+                        height: 0.05 * size.height,
+                        width: size.width,
+                        child: OutlineButton(
+                          borderSide: BorderSide(
+                            color: purpleG,
+                            width: 1,
+                          ),
+                          onPressed: () {
+                            //!------ Function for save button here -------!
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()),
+                            );
+                          },
+                          child: Text(
+                            "Save",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: purpleG,
                             ),
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.edit),
-                            )),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Container(
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                      side: BorderSide(color: Colors.grey)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
-                  },
-                  padding: EdgeInsets.fromLTRB(60, 0, 60, 0),
-                  color: bgBlack,
-                  textColor: Colors.grey,
-                  child: Text("Upload Cover Photo",
-                      style: TextStyle(fontSize: 10)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+            Positioned(
+              top: 0.1 * size.height,
+              left: 0.05 * size.width,
+              child: Stack(
                 children: [
-                  buildTextField("Name", "", false),
-                  buildTextField("E-mail", "", false),
-                  buildTextField("Phone Number", "0950718448", true),
-                  buildTextField("Gender", "", false),
-                  buildTextField("Bio",
-                      "Don't follow your dream, just follow my arts", false),
-                  buildTextField("Art Style Tags", "", false),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    height: 50.0,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0.0),
-                          side: BorderSide(color: Colors.purple)),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Profile()),
-                        );
-                      },
-                      padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
-                      color: bgBlack,
-                      textColor: Colors.purple,
-                      child: Text("Save", style: TextStyle(fontSize: 15)),
-                    ),
+                  CircleAvatar(
+                    radius: 0.12 * size.width,
+                    backgroundImage: AssetImage(profileImg),
                   ),
+                  Positioned(
+                    bottom: 0.01 * size.width,
+                    right: 0.01 * size.width,
+                    child: InkWell(
+                      onTap: () {
+                        //!------ Function for uploade profile image paste here -----!
+                      },
+                      child: CircleAvatar(
+                        radius: 0.03 * size.width,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.edit,
+                          size: 0.025 * size.width,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
+              ),
+            ),
+            Positioned(
+              top: 0.16 * size.height,
+              right: 0.03 * size.width,
+              child: SizedBox(
+                height: 0.03 * size.height,
+                child: OutlineButton(
+                  onPressed: () {
+                    //!----- Function for change profile cover paste here------
+                  },
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    width: 0.5,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 0.025 * size.width,
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        'Upload Cover Photo',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
