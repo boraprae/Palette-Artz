@@ -10,31 +10,46 @@ class change extends StatefulWidget {
 }
 
 class _changeState extends State<change> {
-  Widget passwordChange(String head, String tfield) {
-    TextEditingController tfield = TextEditingController();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Text(
-            head,
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
+  bool showPassword = false;
+
+  Widget passwordChange(
+      String labelText, String placeholder, bool isPasswordTextField) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35.0),
+      child: TextField(
+        style: TextStyle(
+          color: Colors.white,
         ),
-        TextField(
-          controller: tfield,
-          style: TextStyle(color: Colors.white),
-          cursorColor: Colors.white,
-          decoration: InputDecoration(
+        cursorColor: Colors.white,
+        obscureText: isPasswordTextField ? showPassword : false,
+        decoration: InputDecoration(
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
-          ),
-        ),
-      ],
+            suffixIcon: isPasswordTextField
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.grey,
+                    ),
+                  )
+                : null,
+            contentPadding: EdgeInsets.only(bottom: 3),
+            labelText: labelText,
+            labelStyle: TextStyle(color: Colors.white),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )),
+      ),
     );
   }
 
@@ -55,9 +70,9 @@ class _changeState extends State<change> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            passwordChange("Current Password", ""),
-            passwordChange("New Password", ""),
-            passwordChange("Confirm New Password", ""),
+            passwordChange("Current Password", "", true),
+            passwordChange("New Password", "", true),
+            passwordChange("Confirm New Password", "", true),
             SizedBox(
               height: 10,
             ),
