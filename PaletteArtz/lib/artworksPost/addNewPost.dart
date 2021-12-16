@@ -1,4 +1,11 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
@@ -13,6 +20,8 @@ class _AddNewPostState extends State<AddNewPost> {
   TextEditingController artTitleController = TextEditingController();
   TextEditingController artDescriptionController = TextEditingController();
   TextEditingController artTagController = TextEditingController();
+
+  //! dropdown static value
   var dropdownvalue = 'Select style of arts';
   var styleItem = [
     'Select style of arts',
@@ -25,6 +34,41 @@ class _AddNewPostState extends State<AddNewPost> {
     'Digital Art'
   ];
 
+  late Map<dynamic, dynamic> imgData;
+
+  //! Pick image function
+  File? _image;
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      // final imageTemporary = File(image.path);
+      final imagePermanent = await saveImagePermanently(image.path);
+      setState(() {
+        this._image = imagePermanent;
+      });
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
+  //!Save to local storage
+  Future<File> saveImagePermanently(String imagePath) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final image = File('${directory.path}/$name');
+
+    return File(imagePath).copy(image.path);
+  }
+
+  Future submitData(imagePath, title, description, type, tags) async {
+    print("img path:" + imagePath);
+    print("title:" + title);
+    print("description:" + description);
+    print("type:" + type);
+    print("tags:" + tags);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,41 +78,42 @@ class _AddNewPostState extends State<AddNewPost> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //Add images button area
-          SizedBox(
-            height: 0.3 * size.height,
-            width: size.width,
-            child: TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: darkLight,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 0.05 * size.height,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Tap to select your artworks',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
+          //!Add images button area
+          Container(
+              height: 0.3 * size.height,
+              width: size.width,
+              decoration: BoxDecoration(color: darkLight),
+              child: _image != null
+                  ? Image.file(
+                      _image!,
+                      fit: BoxFit.fitWidth,
+                    )
+                  : TextButton(
+                      onPressed: () => pickImage(),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          //Add title image area
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_a_photo_outlined,
+                            size: 0.05 * size.height,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Tap to select your artworks',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+          //!Add title image area
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: Column(
@@ -84,19 +129,23 @@ class _AddNewPostState extends State<AddNewPost> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextField(
-                    controller: artTitleController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Title',
-                      hintStyle: TextStyle(fontSize: 12.0, color: grayText),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: pinkG, width: 0.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.white, width: 0.5),
+                  child: SizedBox(
+                    height: 50,
+                    child: TextField(
+                      controller: artTitleController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Title',
+                        hintStyle: TextStyle(fontSize: 12.0, color: grayText),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(color: pinkG, width: 0.5),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.5),
+                        ),
                       ),
                     ),
                   ),
@@ -104,7 +153,7 @@ class _AddNewPostState extends State<AddNewPost> {
                 SizedBox(
                   height: 0.01 * size.height,
                 ),
-                //Add description area
+                //!Add description area
                 Text(
                   'Description',
                   style: TextStyle(
@@ -115,23 +164,28 @@ class _AddNewPostState extends State<AddNewPost> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 8, 0, 16),
-                  child: TextField(
-                    controller: artDescriptionController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Description',
-                      hintStyle: TextStyle(fontSize: 12.0, color: grayText),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: pinkG, width: 0.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.white, width: 0.5),
+                  child: SizedBox(
+                    height: 50,
+                    child: TextField(
+                      controller: artDescriptionController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: 'Description',
+                        hintStyle: TextStyle(fontSize: 12.0, color: grayText),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(color: pinkG, width: 0.5),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.5),
+                        ),
                       ),
                     ),
                   ),
                 ),
+                //!!Dropdown area not disable the first choice yet :(
                 Container(
                   width: size.width,
                   padding: EdgeInsets.all(16),
@@ -150,7 +204,10 @@ class _AddNewPostState extends State<AddNewPost> {
                           return styleItem.map((String styleItem) {
                             return Text(
                               styleItem,
-                              style: const TextStyle(color: Colors.white54),
+                              style: const TextStyle(
+                                color: Colors.white54,
+                                fontSize: 12,
+                              ),
                             );
                           }).toList();
                         },
@@ -171,60 +228,93 @@ class _AddNewPostState extends State<AddNewPost> {
                     ],
                   ),
                 ),
+                //? TagFiledTag here (still cannor remove below hinttext)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: TextFieldTags(
-                    tagsStyler: TagsStyler(
-                      showHashtag: false,
-                      tagMargin: const EdgeInsets.only(right: 4.0),
-                      tagCancelIcon:
-                          Icon(Icons.cancel, size: 15.0, color: Colors.white),
-                      tagCancelIconPadding:
-                          EdgeInsets.only(left: 4.0, top: 2.0),
-                      tagPadding: EdgeInsets.only(
-                          top: 2.0, bottom: 4.0, left: 8.0, right: 4.0),
-                      tagDecoration: BoxDecoration(
-                        color: pinkG,
-                        // border: Border.all(
-                        //   color: Colors.white,
-                        // ),
-                        // borderRadius: const BorderRadius.all(
-                        //   Radius.circular(20.0),
-                        // ),
+                  child: SizedBox(
+                    height: 70,
+                    child: TextFieldTags(
+                      tagsStyler: TagsStyler(
+                        showHashtag: false,
+                        tagMargin: const EdgeInsets.only(right: 4.0),
+                        tagCancelIcon:
+                            Icon(Icons.cancel, size: 15.0, color: Colors.white),
+                        tagCancelIconPadding:
+                            EdgeInsets.only(left: 4.0, top: 2.0),
+                        tagPadding: EdgeInsets.only(
+                            top: 2.0, bottom: 4.0, left: 8.0, right: 4.0),
+                        tagDecoration: BoxDecoration(
+                          color: pinkG,
+                        ),
+                        tagTextStyle: TextStyle(
+                            fontWeight: FontWeight.normal, color: Colors.white),
                       ),
-                      tagTextStyle: TextStyle(
-                          fontWeight: FontWeight.normal, color: Colors.white),
+                      textFieldStyler: TextFieldStyler(
+                        textFieldFilled: true,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                        hintText: "Add your tags here",
+                        hintStyle: TextStyle(
+                            fontSize: 12.0,
+                            color: Colors.white.withOpacity(0.5)),
+                        isDense: false,
+                        textFieldFocusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: pinkG, width: 0.5),
+                        ),
+                        textFieldEnabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.white, width: 0.5),
+                        ),
+                      ),
+                      onDelete: (tag) {
+                        print('onDelete: $tag');
+                      },
+                      onTag: (tag) {
+                        print('onTag: $tag');
+                      },
+                      validator: (String tag) {
+                        print('validator: $tag');
+                        if (tag.length > 10) {
+                          return "Sorry, you can't longer than that.";
+                        }
+                        return null;
+                      },
                     ),
-                    textFieldStyler: TextFieldStyler(
-                      textFieldFilled: true,
-                      textStyle: TextStyle(
-                        color: Colors.white,
+                  ),
+                ),
+                //! Submit button
+                SizedBox(
+                  width: size.width,
+                  height: 45,
+                  child: ElevatedButton(
+                    //? variable foe submit
+                    //!_image
+                    //!artTitleController
+                    //!artDescriptionController
+                    //!dropdownvalue
+                    //!tag
+                    onPressed: () {},
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(bgBlack),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            side: BorderSide(
+                              color: lightPurple,
+                              width: 0.5,
+                            ),
+                          ),
+                        )),
+
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
                         fontSize: 12,
-                      ),
-                      hintText: "Add your tags here",
-                      hintStyle: TextStyle(
-                          fontSize: 12.0, color: Colors.white.withOpacity(0.5)),
-                      isDense: false,
-                      textFieldFocusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: pinkG, width: 0.5),
-                      ),
-                      textFieldEnabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 0.5),
+                        color: lightPurple,
                       ),
                     ),
-                    onDelete: (tag) {
-                      print('onDelete: $tag');
-                    },
-                    onTag: (tag) {
-                      print('onTag: $tag');
-                    },
-                    validator: (String tag) {
-                      print('validator: $tag');
-                      if (tag.length > 10) {
-                        return "hey that is too much";
-                      }
-                      return null;
-                    },
                   ),
                 )
               ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paletteartz/StoreGift/store.dart';
+import 'package:paletteartz/giftStore/store.dart';
 import 'package:paletteartz/artworksPost/addNewPost.dart';
 import 'package:paletteartz/homepage/Homepage.dart';
 import 'package:paletteartz/artworksetting/change.dart';

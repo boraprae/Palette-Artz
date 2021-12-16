@@ -339,7 +339,7 @@ class _WalletPageState extends State<WalletPage> {
                           minimumSize: Size(100, 30),
                         ),
                         onPressed: () {
-                          setState(() {});
+                          Navigator.pushNamed(context, '/topUp');
                         },
                         child: Text(
                           'Top Up',
@@ -357,7 +357,9 @@ class _WalletPageState extends State<WalletPage> {
                           side: BorderSide(color: pinkG),
                           minimumSize: Size(100, 30),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/withdraw');
+                        },
                         child: Text(
                           'Withdraw',
                           style: TextStyle(
