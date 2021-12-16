@@ -37,147 +37,138 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: Column(
               children: [
-                Positioned(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 100, 0, 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(135, 100, 0, 0),
-                            child: Text(
-                              'Sign in',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 36,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 100, 100, 0),
-                            child: Image.asset(
-                              'assets/img/logo4.png',
-                              width: 50,
-                              height: 50,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //username
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 80, 150, 0),
-                        child: Text(
-                          'Username',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      Text(
+                        'Sign in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 36,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              )),
-                        ),
+                      Image.asset(
+                        'assets/images/logo4.png',
+                        width: 50,
+                        height: 50,
                       ),
-                      //password
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 140, 0),
-                        child: Text(
-                          'Password',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-                        child: TextFormField(
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              )),
-                        ),
-                      ),
-                      //forget password?
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(200, 0, 0, 0),
-                        child: TextButton(
-                            child: Text("Forget Password?"),
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(fontSize: 10),
-                              primary: Colors.white,
-                            ),
-                            onPressed: () {}),
-                      ),
-                      //button sign in
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/MainMenu');
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                          child: Text(
-                            'Sign in',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Text(
-                          'OR',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                          ),
-                        ),
-                      ),
-                      //Sign in with Google
-                      SignInButton(
-                        Buttons.Google,
-                        text: "Sign in with Google",
-                        onPressed: () {},
-                      ),
-                      //
-                      SignInButton(
-                        Buttons.Facebook,
-                        text: "Sign in with Facebook",
-                        onPressed: () {},
-                      ),
-                      TextButton(
-                          child: Text("Don't have account? Sing Up"),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/SignUppage');
-                          }),
                     ],
                   ),
                 ),
+
+                //username
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 80, 150, 0),
+                  child: Text(
+                    'Username',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                  child: TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        )),
+                  ),
+                ),
+                //password
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 140, 0),
+                  child: Text(
+                    'Password',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                  child: TextFormField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        )),
+                  ),
+                ),
+                //forget password?
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(200, 0, 0, 0),
+                  child: TextButton(
+                      child: Text("Forget Password?"),
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 10),
+                        primary: Colors.white,
+                      ),
+                      onPressed: () {}),
+                ),
+                //button sign in
+                ElevatedButton(
+                  onPressed: () {
+                    print('1');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+                    child: Text(
+                      'Sign in',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text(
+                    'OR',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+                //Sign in with Google
+                SignInButton(
+                  Buttons.Google,
+                  text: "Sign in with Google",
+                  onPressed: () {},
+                ),
+                //
+                SignInButton(
+                  Buttons.Facebook,
+                  text: "Sign in with Facebook",
+                  onPressed: () {},
+                ),
+                TextButton(
+                    child: Text("Don't have account? Sing Up"),
+                    style: TextButton.styleFrom(
+                      primary: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/SignUppage');
+                    }),
               ],
             ),
           ),
