@@ -43,7 +43,7 @@ class _InstagramSearchGridState extends State<InstagramSearchGrid> {
       itemCount: imageList.length,
       itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-          // print(index);
+          print(index);
         },
         child: ImageCard(
           imageData: imageList[index],
