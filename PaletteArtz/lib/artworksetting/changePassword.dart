@@ -4,14 +4,14 @@ import 'package:flutter/painting.dart';
 import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 
-class change extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   @override
-  State<change> createState() => _changeState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _changeState extends State<change> {
+class _ChangePasswordState extends State<ChangePassword> {
   bool showPassword = false;
-
+//!Miss the contorller!!
   Widget passwordChange(
       String labelText, String placeholder, bool isPasswordTextField) {
     return Padding(
@@ -62,7 +62,7 @@ class _changeState extends State<change> {
           'Change Password',
           // style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: bgBlack,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

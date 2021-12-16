@@ -1,18 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:paletteartz/artworksetting/change.dart';
 import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 
-class editprofile extends StatefulWidget {
-  const editprofile({Key? key}) : super(key: key);
+class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
 
   @override
-  _editprofileState createState() => _editprofileState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _editprofileState extends State<editprofile> {
+class _EditProfileState extends State<EditProfile> {
   bool showPassword = false;
   @override
   final _controller = TextEditingController();
@@ -67,7 +66,7 @@ class _editprofileState extends State<editprofile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Editprofile"),
+        title: Text("editProfile"),
         backgroundColor: Colors.black,
       ),
       backgroundColor: bgBlack,

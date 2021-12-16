@@ -64,7 +64,6 @@ class _TransactionPageState extends State<TransactionPage> {
       "datetime": "2021-11-27",
       "amount": "9000",
     },
-    
   ];
 
   TextStyle whiteBoldTextStyle(double fontSize) {
@@ -110,7 +109,6 @@ class _TransactionPageState extends State<TransactionPage> {
             dateTime: '${element['datetime']}',
             title: 'Title: ${element['title']}',
             amount: '-${element['amount']}฿'));
-
       } else {
         tiles.add(OutcomeTile(
             name: 'Name: ${element['name']}',
@@ -143,7 +141,6 @@ class _TransactionPageState extends State<TransactionPage> {
             dateTime: '${element['datetime']}',
             title: 'Title: ${element['title']}',
             amount: '${element['amount']}฿'));
-
       } else {
         tiles.add(IncomeTile(
             name: 'Name: ${element['name']}',
@@ -166,16 +163,11 @@ class _TransactionPageState extends State<TransactionPage> {
         appBar: AppBar(
           backgroundColor: bgBlack,
           title: const Text(
-            'Palette Artz',
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-            ),
+            'Transaction History',
           ),
           leading: IconButton(
-            icon: Image.asset(
-              'assets/img/logo3.png',
-            ),
-            onPressed: () {},
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context),
           ),
           bottom: const TabBar(
             indicatorColor: pinkG,
