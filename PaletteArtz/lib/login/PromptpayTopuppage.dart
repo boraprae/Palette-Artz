@@ -63,7 +63,7 @@ class _TopupPPState extends State<TopupPP> {
       ),
       body: Column(
         children: [
-          Image.asset('assets/images/QRpp.jpg'),
+          Image.asset('assets/img/QRpp.jpg'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
