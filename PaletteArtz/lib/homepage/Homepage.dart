@@ -6,9 +6,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
 import 'package:paletteartz/artworksPost/postDetail.dart';
 
-final List<String> imgList = [     //! Array list image for use in Baner
-  'assets/img/longing_by_serayu.jpg',
-  'assets/img/blake_by_serayune_deqcznm.jpg'
+final List<String> imgList = [
+  //! Array list image for use in Baner
+  'assets/img/Ads1.jpg',
+  'assets/img/Ads2.jpg',
+  'assets/img/Ads3.jpg',
 ];
 
 class Homepage extends StatefulWidget {
@@ -22,7 +24,8 @@ class _HomepageState extends State<Homepage> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
-  List Channels = [     //! Array use in Channels 
+  List Channels = [
+    //! Array use in Channels
     {'image': '22.jpg', 'name': 'FANTASY'},
     {'image': '18.jpg', 'name': 'DIGITAL ART'},
     {'image': '19.jpg', 'name': 'ILLUSTARATION'},
@@ -67,7 +70,6 @@ class _HomepageState extends State<Homepage> {
       ],
       '',
     ),
-    
   ];
 
 //!######## Class SliderBanner ####################
@@ -76,32 +78,23 @@ class _HomepageState extends State<Homepage> {
             child: Container(
               margin: EdgeInsets.all(5.0),
               child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   child: Stack(
                     children: <Widget>[
-                      Image.asset(item, fit: BoxFit.cover, width: 1000.0),
+                      Image.asset(item,
+                          fit: BoxFit.cover,
+                          width: 1000.0,
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
+                          colorBlendMode: BlendMode.modulate),
                       Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
+                        top: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
                           child: Text(
-                            'Banner',
+                            'You can contact to advertise at \nBugcompany@.co.th',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -284,7 +277,7 @@ class _HomepageState extends State<Homepage> {
             SizedBox(
               height: 10.0,
             ),
-            //!############## SliderBanner ####################
+            //!############## Slider Banner ####################
             Container(
               child: Column(children: [
                 CarouselSlider(
@@ -292,7 +285,7 @@ class _HomepageState extends State<Homepage> {
                   carouselController: _controller,
                   options: CarouselOptions(
                       autoPlay: true,
-                      enlargeCenterPage: true,
+                      enlargeCenterPage: false,
                       aspectRatio: 2.0,
                       onPageChanged: (index, reason) {
                         setState(() {
@@ -315,7 +308,7 @@ class _HomepageState extends State<Homepage> {
                               shape: BoxShape.circle,
                               color: (Theme.of(context).brightness ==
                                           Brightness.dark
-                                      ? Colors.white
+                                      ? Colors.black
                                       : Colors.white)
                                   .withOpacity(
                                       _current == entry.key ? 0.2 : 0.9)),
@@ -347,7 +340,7 @@ class _HomepageState extends State<Homepage> {
             SizedBox(
               height: 5.0,
             ),
-            // ! Container in Explore Artworks 
+            // ! Container in Explore Artworks
             Container(
               width: size.width,
               height: size.height * 0.8,

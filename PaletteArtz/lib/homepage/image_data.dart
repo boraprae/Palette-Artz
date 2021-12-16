@@ -87,5 +87,4 @@ const imageList = [
     id: 'id-019',
     imageUrl: 'https://picsum.photos/seed/image019/500/800',
   ),
-  
 ];

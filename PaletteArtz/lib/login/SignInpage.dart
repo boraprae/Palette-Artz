@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:paletteartz/mainMenu.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,6 +14,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailTextField = TextEditingController();
+  final passwordTextField = TextEditingController();
+
+  void saveToken(var body) async {
+    Map object = jsonDecode(body) as Map<String, dynamic>;
+    print(object['token']);
+
+    setState(() {});
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String objectString = jsonEncode(object);
+
+    prefs.setString('user', objectString);
+  }
+
+  Future<http.Response> login() {
+    return http.post(
+      Uri.parse('http://10.0.2.2:3000/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': emailTextField.text,
+        'password': passwordTextField.text
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(135, 100, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(100, 100, 0, 0),
                             child: Text(
                               'Sign in',
                               style: TextStyle(
@@ -59,8 +91,8 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.fromLTRB(0, 100, 100, 0),
                             child: Image.asset(
                               'assets/img/logo4.png',
-                              width: 50,
-                              height: 50,
+                              width: 50.0,
+                              height: 50.0,
                             ),
                           ),
                         ],
@@ -81,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
                         child: TextFormField(
+                          controller: emailTextField,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
@@ -106,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
                         child: TextFormField(
+                          controller: passwordTextField,
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
@@ -129,8 +163,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       //button sign in
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/MainMenu');
+                        onPressed: () async {
+                          var Loging = await login();
+                          saveToken(Loging.body);
+                          if (Loging.statusCode < 299) {
+                            Navigator.pushNamed(context, '/mainMenu');
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black,
@@ -174,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                             primary: Colors.white,
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/SignUppage');
+                            Navigator.pushNamed(context, '/signUppage');
                           }),
                     ],
                   ),
@@ -187,3 +225,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+mixin Response {}
