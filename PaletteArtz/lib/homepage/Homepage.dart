@@ -376,9 +376,6 @@ class _HomepageState extends State<Homepage> {
                         // Item rendering
                         return new GestureDetector(
                           onTap: () {
-                            // print(index);
-                            // print(_items[index]);
-                            // Navigator.pushNamed(context, '/postDetail');
                             Navigator.push(
                               context,
                               MaterialPageRoute(

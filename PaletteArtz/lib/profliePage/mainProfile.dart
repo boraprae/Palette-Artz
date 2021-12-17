@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:paletteartz/artworksPost/postDetail.dart';
 import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainProfile extends StatefulWidget {
   const MainProfile({Key? key}) : super(key: key);
@@ -16,264 +19,334 @@ class _MainProfileState extends State<MainProfile> {
   double totalLikes = 1300;
   double totalFollower = 4900;
   double totalFollowing = 512;
+  String _token = '';
+  var userInfoList;
+  List artworkList = [];
+  List<PhotoItem> _items = [];
+  bool _waiting = true;
+  bool _haveImg = false;
+  bool _waitingUserData = true;
 
-  String username = 'SaraYune';
-  String bioText = 'Don’t follow your dream, just follow my arts';
-  List userUnique = ['Anime', 'Fanart', 'Fantasy'];
-  String profileImg = 'assets/img/winter.jpg';
-  String profileCoverImg = 'assets/img/longing_by_serayu.jpg';
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
 
-  final List<PhotoItem> _items = [
-    PhotoItem(
-      "assets/img/uploadedImg/01.jpg",
-      "Arai",
-      "Sara Yune",
-      "Sep 15, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-    PhotoItem(
-      "assets/img/uploadedImg/02.jpg",
-      "Mai roo",
-      "Stephan Seeber",
-      "Sep 4, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-    PhotoItem(
-      "assets/img/uploadedImg/03.png",
-      "55555",
-      "Stephan Seeber",
-      "Sep 4, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-  ];
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+    getUserDataAPI(_token);
+    getArtworkAPI(_token);
+  }
+
+  void getUserDataAPI(String token) async {
+    http.Response userInfoResponse = await getUserInfo(token);
+
+    setState(() {
+      userInfoList = jsonDecode(userInfoResponse.body);
+      _waitingUserData = false;
+    });
+  }
+
+  Future<http.Response> getUserInfo(String token) {
+    return http.get(
+      Uri.parse('http://10.0.2.2:3000/api/profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+    );
+  }
+
+  void getArtworkAPI(String token) async {
+    http.Response artworksResponse = await getArtworks(token);
+    artworkList = jsonDecode(artworksResponse.body);
+
+    if (artworkList.length > 0) {
+      _haveImg = true;
+      for (int i = 0; i < artworkList.length; i++) {
+        _items.add(
+          PhotoItem(
+              'http://10.0.2.2:3000' + artworkList[i]['image_path'],
+              artworkList[i]['title'],
+              artworkList[i]['username'],
+              artworkList[i]['date_time'],
+              artworkList[i]['description'],
+              artworkList[i]['tags_name'],
+              artworkList[i]['type_name']),
+        );
+      }
+      _waiting = false;
+    } else {
+      print("No have img");
+      _haveImg = false;
+      totalLikes = 0;
+    }
+  }
+
+  Future<http.Response> getArtworks(String token) {
+    return http.get(
+      Uri.parse('http://10.0.2.2:3000/api/profile/artwork'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Container(
-        color: bgBlack,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //cover image
-                Container(
-                  height: 0.15 * size.height,
-                  width: size.width,
-                  child: Image.asset(
-                    profileCoverImg,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                //User's stat
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(180, 0, 36, 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      textForm(_items.length.toStringAsFixed(0), 'Artworks'),
-                      textForm(totalLikes.toStringAsFixed(0), 'Likes'),
-                      textForm(totalFollowing.toStringAsFixed(0), 'Follower'),
-                      textForm(totalFollower.toStringAsFixed(0), 'Following'),
-                    ],
-                  ),
-                ),
-                //User's bio
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(36, 18, 36, 0),
-                  child: Column(
+    return _waitingUserData
+        ? Center(
+            child: const CircularProgressIndicator(
+            backgroundColor: bgBlack,
+            color: purpleG,
+          ))
+        : SingleChildScrollView(
+            child: Container(
+              color: bgBlack,
+              child: Stack(
+                children: [
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        username,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        bioText,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'UNIQUE',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: Text(
-                                  '${userUnique[0]},${userUnique[1]},${userUnique[2]}'
-                                      .toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 0.3 * size.width,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'BADGES',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5),
-                                child: Text(
-                                  ':X',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      //cover image
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        height: 0.15 * size.height,
                         width: size.width,
-                        child: OutlineButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Profile()),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                            size: 0.04 * size.width,
-                          ),
-                          label: Text(
-                            'Settings',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
+                        child: Image.network(
+                          'http://10.0.2.2:3000' + userInfoList['cover_image'],
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                      //User's stat
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(180, 0, 36, 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            textForm(
+                                _items.length.toStringAsFixed(0), 'Artworks'),
+                            textForm(totalLikes.toStringAsFixed(0), 'Likes'),
+                            textForm(
+                                totalFollowing.toStringAsFixed(0), 'Follower'),
+                            textForm(
+                                totalFollower.toStringAsFixed(0), 'Following'),
+                          ],
+                        ),
+                      ),
+                      //User's bio
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(36, 18, 36, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              userInfoList['username'],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          borderSide: BorderSide(
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              userInfoList['bio'],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'UNIQUE',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        userInfoList['tags'].toUpperCase(),
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 0.3 * size.width,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'BADGES',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        ':X',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              width: size.width,
+                              child: OutlineButton.icon(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Profile()),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.settings,
+                                  color: Colors.white,
+                                  size: 0.04 * size.width,
+                                ),
+                                label: Text(
+                                  'Settings',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(color: grayText),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(36, 8, 36, 8),
+                        child: Text(
+                          'Gallery',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
                             color: Colors.white,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),
+                      _haveImg
+                          ? _waiting
+                              ? Center(
+                                  child: const CircularProgressIndicator(
+                                  backgroundColor: bgBlack,
+                                  color: purpleG,
+                                ))
+                              : Container(
+                                  width: size.width,
+                                  height: size.height * 0.8,
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisSpacing: 1,
+                                      mainAxisSpacing: 1,
+                                      crossAxisCount: 3,
+                                    ),
+                                    itemCount: _items.length,
+                                    itemBuilder: (context, index) {
+                                      // Item rendering
+                                      return new GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PostDetail(),
+                                              settings: RouteSettings(
+                                                  arguments: _items[index]),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  _items[index].image),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                          : Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 0.1 * size.height,
+                                  ),
+                                  Icon(
+                                    Icons.no_photography,
+                                    color: Colors.grey,
+                                    size: 0.1 * size.height,
+                                  ),
+                                  Text(
+                                    'Doesn\'t have any artwork.',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                     ],
                   ),
-                ),
-                Divider(color: grayText),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(36, 8, 36, 8),
-                  child: Text(
-                    'Gallery',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white,
+                  Positioned(
+                    top: 0.08 * size.height,
+                    left: 0.05 * size.width,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage('http://10.0.2.2:3000' +
+                          userInfoList['profile_image']),
+                      radius: 0.12 * size.width,
                     ),
                   ),
-                ),
-                //Gallery
-                Container(
-                  width: size.width,
-                  height: size.height * 0.8,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 1,
-                      mainAxisSpacing: 1,
-                      crossAxisCount: 3,
-                    ),
-                    itemCount: _items.length,
-                    itemBuilder: (context, index) {
-                      // Item rendering
-                      return new GestureDetector(
-                        onTap: () {
-                          // print(index);
-                          // print(_items[index]);
-                          // Navigator.pushNamed(context, '/postDetail');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PostDetail(),
-                              settings: RouteSettings(arguments: _items[index]),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(_items[index].image),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              top: 0.08 * size.height,
-              left: 0.05 * size.width,
-              child: CircleAvatar(
-                backgroundImage: AssetImage(profileImg),
-                radius: 0.12 * size.width,
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }
 

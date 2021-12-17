@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:paletteartz/artworksetting/changePassword.dart';
 import 'package:paletteartz/artworksetting/editProfile.dart';
 import 'package:paletteartz/constantColor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,8 +13,43 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String username = 'SaraYune';
-  String profileImg = 'assets/img/winter.jpg';
+  String _token = '';
+  var userInfoList;
+  bool _waitingUserData = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+    getUserDataAPI(_token);
+  }
+
+  void getUserDataAPI(String token) async {
+    http.Response userInfoResponse = await getUserInfo(token);
+    setState(() {
+      userInfoList = jsonDecode(userInfoResponse.body);
+      _waitingUserData = false;
+    });
+  }
+
+  Future<http.Response> getUserInfo(String token) {
+    return http.get(
+      Uri.parse('http://10.0.2.2:3000/api/profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +60,13 @@ class _ProfileState extends State<Profile> {
         ),
         backgroundColor: bgBlack,
       ),
-      body: Padding(
+      body:  _waitingUserData
+        ? Center(
+            child: const CircularProgressIndicator(
+            backgroundColor: bgBlack,
+            color: purpleG,
+          ))
+        : Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,9 +79,8 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(
-                      profileImg,
-                    ),
+                    backgroundImage:
+                        NetworkImage('http://10.0.2.2:3000' + userInfoList['profile_image']),
                     radius: 40,
                   ),
                   Padding(
@@ -52,7 +96,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Text(
-                          username,
+                          userInfoList['username'],
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
@@ -86,7 +130,9 @@ class _ProfileState extends State<Profile> {
                 Navigator.pushNamed(context, '/changePassword');
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16,),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
                 child: Row(
                   children: [
                     Icon(

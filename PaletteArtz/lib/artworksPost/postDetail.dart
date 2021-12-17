@@ -435,7 +435,7 @@ class _PostDetailState extends State<PostDetail> {
               width: size.width,
               child: Image.network(
                 _items.image,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.cover,
               ),
             ),
             Padding(
