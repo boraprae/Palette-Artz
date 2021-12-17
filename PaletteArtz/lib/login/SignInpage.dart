@@ -184,45 +184,49 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   onPressed: () {}),
               //button sign in
-              ElevatedButton(
-                onPressed: () async {
-                  if (emailTextField.text == '' ||
-                      passwordTextField.text == '') {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Warning!'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Please type your email and password first.'),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    var Loging = await login();
-                    saveToken(Loging.body);
-                    if (Loging.statusCode < 299) {
-                      Navigator.pushNamed(context, '/mainMenu');
-                      emailTextField.clear();
-                      passwordTextField.clear();
+              SizedBox(
+                width: 0.5*size.width,
+                height: 0.05*size.height,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (emailTextField.text == '' ||
+                        passwordTextField.text == '') {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Warning!'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Please type your email and password first.'),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     } else {
-                      loginFailed(Loging.body);
+                      var Loging = await login();
+                      saveToken(Loging.body);
+                      if (Loging.statusCode < 299) {
+                        Navigator.pushNamed(context, '/mainMenu');
+                        emailTextField.clear();
+                        passwordTextField.clear();
+                      } else {
+                        loginFailed(Loging.body);
+                      }
                     }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
                   ),
-                ),
-                child: Text(
-                  'Sign in',
-                  style: TextStyle(fontSize: 14),
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
               ),
               Padding(
