@@ -22,7 +22,7 @@ void main() {
   runApp(
       MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/signInpage',
+      initialRoute: '/welcome',
       routes: {
         '/welcome': (context) => WelcomePage(),
         '/signInpage': (context) => LoginPage(),
