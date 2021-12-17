@@ -17,17 +17,18 @@ class _ChanelsPageState extends State<ChanelsPage> {
   var channelobject;
   List Channels = [];
   List<Widget> Chbody = [];
+  String localIP = "http://10.0.2.2:3000";
 
   void initState() {
     super.initState();
-    LoopChannel();
+    gettoken();
   }
 
   Future gettoken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userString = await prefs.getString('user');
     Map userobject = jsonDecode(userString!) as Map<String, dynamic>;
-    print(userobject["token"]);
+
     token = userobject["token"];
     await getapi();
   }
@@ -58,69 +59,62 @@ class _ChanelsPageState extends State<ChanelsPage> {
 
   void LoopChannel() {
     for (int i = 0; i < channelobject.length; i++) {
-      Channels.add(
-        {
-          'id': channelobject[i]["id"],
-          'name': channelobject[i]["type_name"],
-          'image': 'http://10.0.2.2:3000' + channelobject[i]["type_image_path"]
-        },
-      );
-      
-      Chbody.add(channel(channelobject[i]));
+      Chbody.add(channel(channelobject[i], localIP));
     }
     setState(() {});
   }
 
-  Widget channel(channelobject) {
-    return Container(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/separate',
-                    arguments: <String, dynamic>{
-                      'name':
-                          channelobject['name'] //!post data to ChannelSeparate
-                    });
-              },
-              child: Container(
-                height: 90,
-                width: 180,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      colorFilter: new ColorFilter.mode(
-                          Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                      image: NetworkImage(
-                          channelobject['image']), //! image can change
-                      fit: BoxFit.cover),
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      channelobject['name'], //! Text can change
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+  Widget channel(object, ip) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/separate',
+                  arguments: <String, dynamic>{
+                    'name':
+                        object['type_name'], //!post data to ChannelSeparate
+                        'id': object['id']
+                  });
+            },
+            child: Container(
+              height: 90,
+              width: 180,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: new ColorFilter.mode(
+                        Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                    image: NetworkImage(localIP +
+                        object['type_image_path']), //! image can change
+                    fit: BoxFit.cover),
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    object['type_name'], //! Text can change
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: bgBlack,
       appBar: AppBar(
@@ -133,9 +127,24 @@ class _ChanelsPageState extends State<ChanelsPage> {
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
+              
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  children: Chbody,
+                SizedBox(
+                  height: size.height * 0.9,
+                  
+                  
+                  child: GridView.count(
+                    // Create a grid with 2 columns. If you change the scrollDirection to
+                    // horizontal, this would produce 2 rows.
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                    childAspectRatio: 2,
+               
+                    crossAxisCount: 2,
+                    // Generate 100 Widgets that display their index in the List
+                    children: Chbody.length == 0 ? []: Chbody,
+                  ),
                 ),
               ],
             ),

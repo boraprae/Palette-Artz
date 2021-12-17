@@ -3,10 +3,12 @@ import 'package:meta/meta.dart';
 class ImageData {
   final String? id;
   final String? imageUrl;
+  final data;
 
   const ImageData({
     @required this.id,
     @required this.imageUrl,
+    this.data
   });
 }
 

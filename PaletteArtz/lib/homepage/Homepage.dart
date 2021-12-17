@@ -33,37 +33,23 @@ class _HomepageState extends State<Homepage> {
   String token = "";
   var channelobject;
   var artwork;
-  List Channels = [];
+  List channelList = [];
 
   final CarouselController _controller = CarouselController();
 
   void initState() {
     super.initState();
-    gettoken();
+    getToken();
   }
 
-  Future gettoken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userString = await prefs.getString('user');
-    Map userobject = jsonDecode(userString!) as Map<String, dynamic>;
-    print(userobject["token"]);
-    token = userobject["token"];
-    await getapi();
-  }
-
-  Future getapi() async {
-    var channel = await getChannel();
+  Future getChannelAPI(String token) async {
+    var channel = await getChannel(token);
     // print(channel.body);
     channelobject = jsonDecode(channel.body) as List<dynamic>;
     // print(channelobject);
-    setState(() {
-      LoopChannel();
-    });
   }
 
-
-
-  Future<http.Response> getChannel() {
+  Future<http.Response> getChannel(String token) {
     return http.get(Uri.parse('http://10.0.2.2:3000/api/homepage/channel'),
         headers: <String, String>{
           // 'Content-Type': 'application/json; charset=UTF-8',
@@ -76,10 +62,10 @@ class _HomepageState extends State<Homepage> {
           // }),
         });
   }
-  
+
   void LoopChannel() {
     for (int i = 0; i < channelobject.length; i++) {
-      Channels.add(
+      channelList.add(
         {
           'id': channelobject[i]["id"],
           'name': channelobject[i]["type_name"],
@@ -89,23 +75,21 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
-
-  @override
-  void initState() {
-    super.initState();
-    getToken();
-  }
-
   void getToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userString = await pref.getString('user');
 
     var userObject = jsonDecode(userString!) as Map<String, dynamic>;
     _token = userObject['token'];
-    getAPI(_token);
+    await getChannelAPI(_token);
+    await getArtWorkAPI(_token);
+
+    setState(() {
+      LoopChannel();
+    });
   }
 
-  void getAPI(String token) async {
+  Future getArtWorkAPI(String token) async {
     http.Response artworkResponse = await getArtwork(token);
     artworkList = jsonDecode(artworkResponse.body);
     artworkList.shuffle();
@@ -211,46 +195,46 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       );
-    }
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          '/separate',
-          arguments: <String, dynamic>{
-            'name': Channels[index]['name'],
-          },
-        );
-      },
-      child: Container(
-        height: 20,
-        width: 170,
-        margin: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              Channels[index]['image'],
+    } else {
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            '/separate',
+            arguments: <String, dynamic>{
+              'name': channelList[index]['name'],
+            },
+          );
+        },
+        child: Container(
+          height: 20,
+          width: 170,
+          margin: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(
+                channelList[index]['image'] ?? '',
+              ),
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.5), BlendMode.dstATop),
             ),
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5), BlendMode.dstATop),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                channelList[index]['name'] ?? '',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              Channels[index]['name'],
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -271,7 +255,7 @@ class _HomepageState extends State<Homepage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Explore Channels',
+                      'Explore channelList',
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -282,7 +266,7 @@ class _HomepageState extends State<Homepage> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: 100.0,
-                child: ListView.builder(
+                child: channelList.length == 0 ? null : ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
                     itemBuilder: (context, index) {

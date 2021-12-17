@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:paletteartz/artworksPost/postDetail.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:paletteartz/profliePage/shared/listImg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'image_data.dart';
+import 'package:http/http.dart' as http;
 
 class SeparatePage extends StatefulWidget {
   const SeparatePage({Key? key}) : super(key: key);
@@ -15,6 +21,7 @@ class _SeparatePageState extends State<SeparatePage> {
   Widget build(BuildContext context) {
     Map<String, dynamic> data =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    print(data);
     return Scaffold(
       backgroundColor: bgBlack,
       appBar: AppBar(
@@ -24,29 +31,97 @@ class _SeparatePageState extends State<SeparatePage> {
         automaticallyImplyLeading: true,
       ),
       body: SafeArea(
-        child: InstagramSearchGrid(),
+        child: InstagramSearchGrid(data),
       ),
     );
   }
 }
 
 class InstagramSearchGrid extends StatefulWidget {
+  final _data;
+  const InstagramSearchGrid(this._data);
   @override
   _InstagramSearchGridState createState() => _InstagramSearchGridState();
 }
 
 class _InstagramSearchGridState extends State<InstagramSearchGrid> {
+  List apiImageList = [];
+  String _token = "";
+  String localIP = "http://10.0.2.2:3000";
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  Future getChannelNameAPI(String token) async {
+    var channelDetails =
+        await getChannelName(token, widget._data['id'].toString());
+    print(channelDetails.statusCode);
+    if (channelDetails.statusCode > 299) {
+      return print(channelDetails.body);
+    }
+    var channelDetailsObj = jsonDecode(channelDetails.body);
+    // print(channelDetailsObj);
+    return channelDetailsObj;
+  }
+
+  Future<http.Response> getChannelName(String token, String query) {
+    return http.get(
+        Uri.parse('http://10.0.2.2:3000/api/homepage/channel?id=${query}'),
+        headers: <String, String>{
+          // 'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': token,
+
+          // body: jsonEncode(<String,Sting>{
+          //   'id':
+          //   'type_name': 'name',
+          //   'password': passwordTextField.text
+          // }),
+        });
+  }
+
+  Future getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+    var channelPostResponseBody = await getChannelNameAPI(_token);
+    for (var post in channelPostResponseBody) {
+      apiImageList.add(ImageData(
+          id: post['id'].toString(), imageUrl: localIP + post['image_path'], data: post)
+          );
+    }
+    print(apiImageList);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 2,
-      itemCount: imageList.length,
+      itemCount: apiImageList.length,
       itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-          print(index);
+          print(apiImageList[index].id);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const PostDetail(),
+              settings: RouteSettings(arguments: PhotoItem(
+                apiImageList[index].imageUrl,
+                apiImageList[index].data['title'],
+                apiImageList[index].data['username'],
+                apiImageList[index].data['date_time'],
+                apiImageList[index].data['description'],
+                apiImageList[index].data['tags_name'],
+                apiImageList[index].data['type_name'],
+              )),
+            ),
+          );
         },
         child: ImageCard(
-          imageData: imageList[index],
+          imageData: apiImageList[index],
         ),
       ),
       staggeredTileBuilder: (index) => StaggeredTile.count(
