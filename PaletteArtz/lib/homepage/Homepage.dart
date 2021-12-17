@@ -415,7 +415,7 @@ class _HomepageState extends State<Homepage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const PostDetail(),
+                                builder: (context) => PostDetail(),
                                 settings:
                                     RouteSettings(arguments: _items[index]),
                               ),
