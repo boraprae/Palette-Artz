@@ -40,8 +40,6 @@ dependencies:
   cached_network_image: ^3.2.0
 
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -62,10 +60,6 @@ flutter:
   assets:
     - assets/img/
     - assets/img/uploadedImg/
-    - assets/img/anime1.jpg
-    - assets/img/anime7.jpg
-    - assets/img/QRpp.jpg
-    - assets/img/logo4.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

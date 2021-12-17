@@ -11,9 +11,7 @@ class Searchpage extends StatefulWidget {
 class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
   late TabController _tabController;
 
-  List history = [
-    
-  ];
+  List history = [];
 
   @override
   void initState() {
@@ -121,9 +119,7 @@ class _SearchpageState extends State<Searchpage> with TickerProviderStateMixin {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  setState(() {
-                                    
-                                  });
+                                  setState(() {});
                                 },
                                 child: Text(
                                   'Clear All',
