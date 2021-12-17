@@ -435,7 +435,7 @@ class _PostDetailState extends State<PostDetail> {
               width: size.width,
               child: Image.network(
                 _items.image,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitWidth,
               ),
             ),
             Padding(
@@ -512,7 +512,7 @@ class _PostDetailState extends State<PostDetail> {
                           ),
                         ),
                         Text(
-                          _items.pubDate,
+                          'Published: '+_items.pubDate,
                           style: TextStyle(
                             fontSize: 12,
                             color: grayText,

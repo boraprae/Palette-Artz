@@ -62,12 +62,15 @@ class _HomepageState extends State<Homepage> {
     artworkList.shuffle();
 
     for (int i = 0; i < artworkList.length; i++) {
+      String date = artworkList[i]['date_time'].toString();
+      List pubDate = date.split(' ');
+
       _items.add(
         PhotoItem(
             'http://10.0.2.2:3000' + artworkList[i]['image_path'],
             artworkList[i]['title'],
             artworkList[i]['username'],
-            artworkList[i]['date_time'],
+            pubDate[0],
             artworkList[i]['description'],
             artworkList[i]['tags_name'],
             artworkList[i]['type_name']),
