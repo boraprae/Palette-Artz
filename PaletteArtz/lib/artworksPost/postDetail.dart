@@ -617,9 +617,7 @@ class _PostDetailState extends State<PostDetail> {
                     children: [
                       CircleAvatar(
                         radius: 10.0,
-                        backgroundImage: AssetImage(
-                          'assets/img/winter.jpg',
-                        ),
+                        backgroundImage: NetworkImage('http://10.0.2.2:3000' + userInfoList['profile_image']),
                       ),
                       SizedBox(
                         width: 10,
