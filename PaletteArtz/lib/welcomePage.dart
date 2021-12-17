@@ -51,17 +51,6 @@ class _WelcomePageState extends State<WelcomePage> {
                           topRight: Radius.circular(40.0),
                           bottomRight: Radius.circular(40.0),
                         ),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.black,
-                        //     blurRadius: 14.0, // soften the shadow
-                        //     spreadRadius: 1.0, //extend the shadow
-                        //     offset: Offset(
-                        //       5.0, // Move to right 10  horizontally
-                        //       4.0, // Move to bottom 10 Vertically
-                        //     ),
-                        //   ),
-                        // ],
                       ),
                     ),
                   ),

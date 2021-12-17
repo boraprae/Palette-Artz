@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:paletteartz/homepage/Channelspage.dart';
 import 'package:paletteartz/homepage/Searchpage.dart';
@@ -5,11 +7,13 @@ import 'package:paletteartz/constantColor.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
 import 'package:paletteartz/artworksPost/postDetail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 final List<String> imgList = [
   //! Array list image for use in Baner
   'assets/img/Ads1.jpg',
-  'assets/img/Ads2.jpg',
+  'assets/img/Ads2.png',
   'assets/img/Ads3.jpg',
 ];
 
@@ -19,6 +23,10 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  String _token = '';
+  bool _waiting = true;
+  List artworkList = [];
+  List<PhotoItem> _items = [];
   TextEditingController newComment = TextEditingController();
 
   int _current = 0;
@@ -33,44 +41,50 @@ class _HomepageState extends State<Homepage> {
     {'image': '21.jpg', 'name': 'SERIES FANART'},
   ];
 
-  final List<PhotoItem> _items = [
-    PhotoItem(
-      "assets/img/uploadedImg/01.jpg",
-      "Arai",
-      "Sara Yune",
-      "Sep 15, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-    PhotoItem(
-      "assets/img/uploadedImg/02.jpg",
-      "Mai roo",
-      "Stephan Seeber",
-      "Sep 4, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-    PhotoItem(
-      "assets/img/uploadedImg/03.png",
-      "55555",
-      "Stephan Seeber",
-      "Sep 4, 2021",
-      "lineless commission for Panalee0819 thanks for commissioning",
-      [
-        'Anime',
-        'Fanart',
-      ],
-      '',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+    getAPI(_token);
+  }
+
+  void getAPI(String token) async {
+    http.Response artworkResponse = await getArtwork(token);
+    artworkList = jsonDecode(artworkResponse.body);
+    artworkList.shuffle();
+
+    for (int i = 0; i < artworkList.length; i++) {
+      _items.add(
+        PhotoItem(
+            'http://10.0.2.2:3000' + artworkList[i]['image_path'],
+            artworkList[i]['title'],
+            artworkList[i]['username'],
+            artworkList[i]['date_time'],
+            artworkList[i]['description'],
+            artworkList[i]['tags_name'],
+            artworkList[i]['type_name']),
+      );
+    }
+    _waiting = false;
+  }
+
+  Future<http.Response> getArtwork(String token) {
+    return http.get(
+      Uri.parse('http://10.0.2.2:3000/api/homepage/artwork'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+    );
+  }
 
 //!######## Class SliderBanner ####################
   final List<Widget> imageSliders = imgList
@@ -82,7 +96,7 @@ class _HomepageState extends State<Homepage> {
                   child: Stack(
                     children: <Widget>[
                       Image.asset(item,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fitWidth,
                           width: 1000.0,
                           color: const Color.fromRGBO(255, 255, 255, 0.5),
                           colorBlendMode: BlendMode.modulate),
@@ -341,43 +355,51 @@ class _HomepageState extends State<Homepage> {
               height: 5.0,
             ),
             // ! Container in Explore Artworks
-            Container(
-              width: size.width,
-              height: size.height * 0.8,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 1,
-                  mainAxisSpacing: 1,
-                  crossAxisCount: 3,
-                ),
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  // Item rendering
-                  return new GestureDetector(
-                    onTap: () {
-                      // print(index);
-                      // print(_items[index]);
-                      // Navigator.pushNamed(context, '/postDetail');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PostDetail(),
-                          settings: RouteSettings(arguments: _items[index]),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(_items[index].image),
-                        ),
+            _waiting
+                ? Center(
+                    child: const CircularProgressIndicator(
+                    backgroundColor: bgBlack,
+                    color: purpleG,
+                  ))
+                : Container(
+                    width: size.width,
+                    height: size.height * 0.8,
+                    color: bgBlack,
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 1,
+                        mainAxisSpacing: 1,
+                        crossAxisCount: 3,
                       ),
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        // Item rendering
+                        return new GestureDetector(
+                          onTap: () {
+                            // print(index);
+                            // print(_items[index]);
+                            // Navigator.pushNamed(context, '/postDetail');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PostDetail(),
+                                settings:
+                                    RouteSettings(arguments: _items[index]),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(_items[index].image),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ],
         ),
       ),

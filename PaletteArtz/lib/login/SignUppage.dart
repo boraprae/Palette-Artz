@@ -14,6 +14,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final usernameTextField = TextEditingController();
   final emailTextField = TextEditingController();
   final passwordTextField = TextEditingController();
+  bool showPassword = true;
 
   Future<http.Response> signup() {
     return http.post(
@@ -34,160 +35,191 @@ class _RegisterPageState extends State<RegisterPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFF161616),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Container(
-            width: 0.9 * size.width,
-            height: 1.0 * size.height,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
-              ),
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment(-1.0, 0.4),
-                colors: [
-                  Color(0xFFD7378F),
-                  Color(0xFF7A2997),
-                  Color(0xFF212F9C),
-                ],
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Container(
+          width: 0.9 * size.width,
+          height: 1.0 * size.height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
             ),
-            child: Column(
-              children: [
-                Positioned(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(135, 30, 0, 0),
-                              child: Text(
-                                'Sign up',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 30, 100, 0),
-                              child: Image.asset(
-                                'assets/img/logo4.png',
-                                width: 50,
-                                height: 50,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        //username
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 30, 150, 0),
-                          child: Text(
-                            'Username',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-                          child: TextFormField(
-                            controller: usernameTextField,
-                          ),
-                        ),
-                        //Email
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 180, 0),
-                          child: Text(
-                            'Email',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-                          child: TextFormField(
-                            controller: emailTextField,
-                          ),
-                        ),
-                        //Password
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 140, 0),
-                          child: Text(
-                            'Password',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-                          child: TextFormField(
-                            controller: passwordTextField,
-                          ),
-                        ),
-                        //Confirm Password
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 80, 0),
-                          child: Text(
-                            'Confirm Password',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ), //! ===========================  ยังไม่ได้ทำfuntion confirm password ฝั่งหน้าบ้าน  ===============================
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(100, 0, 100, 20),
-                          child: TextFormField(),
-                        ),
-                        //button sign in
-                        ElevatedButton(
-                          onPressed: () async {
-                            var Signup = await signup();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.black,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
-                            child: Text(
-                              'Sign up',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        //if not have acc
-
-                        TextButton(
-                            child: Text("Already have account? Sign In"),
-                            style: TextButton.styleFrom(
-                              primary: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/signInpage');
-                            }),
-                      ]),
-                ),
+            gradient: LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment(-1.0, 0.4),
+              colors: [
+                Color(0xFFD7378F),
+                Color(0xFF7A2997),
+                Color(0xFF212F9C),
               ],
             ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Image.asset(
+                    'assets/img/logo4.png',
+                    width: 50,
+                    height: 50,
+                  ),
+                ],
+              ),
+
+              //username
+              Padding(
+                padding: const EdgeInsets.fromLTRB(64, 32, 64, 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Username',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: usernameTextField,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    //Email
+                    Text(
+                      'Email',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: emailTextField,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    //Password
+                    Text(
+                      'Password',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: passwordTextField,
+                      style: TextStyle(color: Colors.white),
+                      obscureText: showPassword,
+                      decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.white,
+                            ),
+                          )),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                ),
+              ), //button sign in
+              ElevatedButton(
+                onPressed: () async {
+                  if (usernameTextField.text == '' ||
+                      emailTextField.text == '' ||
+                      passwordTextField.text == '') {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Warning!'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('You have to complete all fields.'),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    var Signup = await signup();
+                    emailTextField.clear();
+                    usernameTextField.clear();
+                    passwordTextField.clear();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(80, 15, 80, 15),
+                  child: Text(
+                    'Sign up',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ),
+              //if not have acc
+
+              TextButton(
+                  child: Text("Already have account? Sign In"),
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signInpage');
+                  }),
+            ],
           ),
         ),
       ),

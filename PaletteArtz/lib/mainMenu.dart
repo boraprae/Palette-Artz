@@ -37,6 +37,7 @@ class _MainMenuState extends State<MainMenu> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+        backgroundColor: bgBlack,
         appBar: AppBar(
           backgroundColor: bgBlack,
           title: const Text(

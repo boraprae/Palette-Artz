@@ -256,7 +256,8 @@ class _PostDetailState extends State<PostDetail> {
                                                   if (itemCount > 0) {
                                                     itemCount -= 1;
                                                   } else {
-                                                    textAlert = 'You decrese for what? It\'s still zero!';
+                                                    textAlert =
+                                                        'You decrese for what? It\'s still zero!';
                                                     showTextAlert = true;
                                                   }
                                                 });
@@ -432,7 +433,7 @@ class _PostDetailState extends State<PostDetail> {
             Container(
               height: 0.4 * size.height,
               width: size.width,
-              child: Image.asset(
+              child: Image.network(
                 _items.image,
                 fit: BoxFit.fitWidth,
               ),
@@ -484,20 +485,30 @@ class _PostDetailState extends State<PostDetail> {
                     padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          radius: 10.0,
-                          backgroundImage: AssetImage(
-                            'assets/img/winter.jpg',
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            username,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                            ),
+                        GestureDetector(
+                          onTap: (){
+                            //!-------- Paste code for go to another profile here ----
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 10.0,
+                                backgroundImage: AssetImage(
+                                  'assets/img/winter.jpg',
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  _items.pubUsername,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Text(
