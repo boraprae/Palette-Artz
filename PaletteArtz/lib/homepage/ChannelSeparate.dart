@@ -104,10 +104,13 @@ class _InstagramSearchGridState extends State<InstagramSearchGrid> {
       itemBuilder: (context, index) => GestureDetector(
         onTap: () {
           print(apiImageList[index].id);
+          Map user_id = {
+            "user_id": apiImageList[index].data['user_id'].toString()
+          };
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PostDetail(),
+              builder: (context) =>  PostDetail(userData: user_id),
               settings: RouteSettings(arguments: PhotoItem(
                 apiImageList[index].imageUrl,
                 apiImageList[index].data['title'],

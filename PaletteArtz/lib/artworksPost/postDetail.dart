@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostDetail extends StatefulWidget {
-  const PostDetail({Key? key}) : super(key: key);
+  var userData;
+  PostDetail({this.userData}) {}
 
   @override
   _PostDetailState createState() => _PostDetailState();
@@ -64,59 +65,155 @@ class _PostDetailState extends State<PostDetail> {
   String textAlert = 'Please select the item first';
   String selectedItemText = 'You don\'t select any gift yet.';
   String itemName = '';
+  int currentItemId = 1;
 
   String totalComment = '0';
   String totalLikes = '1.2k';
   String username = 'SaraYune';
-
+  String _token = "";
+  var _userGiftData;
   //!------- List of items(Update after connect to the db) ------!
   List giftStore = [
     {
+      "itemId": 1,
       "itemName": "Gift Box",
-      "itemAmount": 50,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift1.png"
     },
     {
+      "itemId": 2,
       "itemName": "Mistletoe",
-      "itemAmount": 30,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift2.png"
     },
     {
+      "itemId": 3,
       "itemName": "Butterfly",
-      "itemAmount": 10,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift3.png"
     },
     {
+      "itemId": 4,
       "itemName": "Rainbow",
-      "itemAmount": 15,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift4.png"
     },
     {
+      "itemId": 5,
       "itemName": "Crown",
-      "itemAmount": 7,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift5.png",
     },
     {
+      "itemId": 6,
       "itemName": "Diamond",
-      "itemAmount": 19,
+      "itemAmount": 0,
       "itemImg": "assets/img/gift6.png"
     },
   ];
 
-  void getName(String name) {
+  Future showAlert(String title, String alertMessage) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(alertMessage),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future getUserGift(String token) async {
+    return http.get(Uri.parse('http://10.0.2.2:3000/api/user_gift'),
+        headers: <String, String>{
+          // 'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': token,
+
+          // body: jsonEncode(<String,Sting>{
+          //   'id':
+          //   'type_name': 'name',
+          //   'password': passwordTextField.text
+          // }),
+        });
+  }
+
+  Future sendGift(String token, int gift_id, int amount, int user_id) async {
+    print('Gift ID: $gift_id, $amount, $user_id');
+    return http.post(
+      Uri.parse('http://10.0.2.2:3000/api/send_gift'),
+      headers: <String, String>{
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+      body: {
+        'test': 'hgeh',
+        'gift_id': gift_id.toString(),
+        'amount': amount.toString(),
+        'user_id': user_id.toString()
+      },
+    );
+  }
+
+  void prepareGiftData() {
+    for (int gift = 0; gift < giftStore.length; gift++) {
+      for (int dbGift = 0; dbGift < _userGiftData.length; dbGift++) {
+        if (giftStore[gift]['itemId'] == _userGiftData[dbGift]['gift_id']) {
+          giftStore[gift]['itemAmount'] =
+              int.parse(_userGiftData[dbGift]['amount']);
+          break;
+        }
+      }
+    }
+
+    print(giftStore);
+  }
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    var localToken = userObject['token'];
+    _token = localToken;
+    http.Response userGiftResponse = await getUserGift(localToken);
+    if (userGiftResponse.statusCode > 299) {
+      return print(userGiftResponse.body);
+    }
+    var userGiftObj = jsonDecode(userGiftResponse.body);
+    _userGiftData = userGiftObj;
+    prepareGiftData();
+
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
+  }
+
+  void getName(String name, int id) {
     setState(() {
       itemName = name;
+      currentItemId = id;
     });
   }
 
   //*---------- Item store for sale -----------*
-  Widget itemStore(String name, int amount, String img, var setState) {
+  Widget itemStore(int id, String name, int amount, String img, var setState) {
     return GestureDetector(
       onTap: () {
         setState(() {
           itemCount = 0;
           selectedItemText = 'You\'re selecting $name';
-          getName(name);
+          getName(name, id);
         });
       },
       child: Padding(
@@ -188,18 +285,21 @@ class _PostDetailState extends State<PostDetail> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           itemStore(
+                            giftStore[0]['itemId'],
                             giftStore[0]['itemName'],
                             giftStore[0]['itemAmount'],
                             giftStore[0]['itemImg'],
                             setState,
                           ),
                           itemStore(
+                            giftStore[1]['itemId'],
                             giftStore[1]['itemName'],
                             giftStore[1]['itemAmount'],
                             giftStore[1]['itemImg'],
                             setState,
                           ),
                           itemStore(
+                            giftStore[2]['itemId'],
                             giftStore[2]['itemName'],
                             giftStore[2]['itemAmount'],
                             giftStore[2]['itemImg'],
@@ -213,18 +313,21 @@ class _PostDetailState extends State<PostDetail> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         itemStore(
+                          giftStore[3]['itemId'],
                           giftStore[3]['itemName'],
                           giftStore[3]['itemAmount'],
                           giftStore[3]['itemImg'],
                           setState,
                         ),
                         itemStore(
+                          giftStore[4]['itemId'],
                           giftStore[4]['itemName'],
                           giftStore[4]['itemAmount'],
                           giftStore[4]['itemImg'],
                           setState,
                         ),
                         itemStore(
+                          giftStore[5]['itemId'],
                           giftStore[5]['itemName'],
                           giftStore[5]['itemAmount'],
                           giftStore[5]['itemImg'],
@@ -351,7 +454,8 @@ class _PostDetailState extends State<PostDetail> {
                                 child: TextButton(
                                   onPressed: () {
                                     //!---- after pressed send button ---
-                                    sendItem(itemName, itemCount, setState);
+                                    sendItem(currentItemId, itemName, itemCount,
+                                        setState);
                                   },
                                   child: Text(
                                     'Send',
@@ -397,26 +501,34 @@ class _PostDetailState extends State<PostDetail> {
   }
 
   //!---- After pressed send botton -----
-  void sendItem(String itemName, int totalItem, var setState) {
-    setState(() {
-      if (itemName == null || itemName == '') {
-        textAlert = 'Please select the item first';
-        showTextAlert = true;
-      } else if (totalItem <= 0) {
-        textAlert = 'Hey! How about the amount dude!';
-        showTextAlert = true;
-      } else {
-        print("**This is an item which you selected na :)**");
-        print("Item name: $itemName, Total: $totalItem");
-        Navigator.pop(context);
+  void sendItem(
+      int itemId, String itemName, int totalItem, var setState) async {
+    if (itemId == null || itemName == '') {
+      textAlert = 'Please select the item first';
+      showTextAlert = true;
+    } else if (totalItem <= 0) {
+      textAlert = 'Hey! How about the amount dude!';
+      showTextAlert = true;
+    } else {
+      print("**This is an item which you selected na :)**");
+      print("Item name: $itemName ID: $itemId, Total: $totalItem");
+      http.Response giftSendResponse = await sendGift(
+          _token, itemId, totalItem, int.parse(widget.userData['user_id']));
+      if (giftSendResponse.statusCode > 299) {
+        return showAlert('Error', giftSendResponse.body);
       }
-    });
+
+      Navigator.pop(context);
+      showAlert('Success', 'Gift sent!');
+    }
+    setState(() {});
 
     //?-- waiting for kranny ;-; --?
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.userData);
     final _items = ModalRoute.of(context)!.settings.arguments as PhotoItem;
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
