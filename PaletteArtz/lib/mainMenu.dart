@@ -1,8 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:paletteartz/giftStore/store.dart';
+import 'package:paletteartz/artworksPost/addNewPost.dart';
+import 'package:paletteartz/homepage/Homepage.dart';
+import 'package:paletteartz/artworksetting/changePassword.dart';
+import 'package:paletteartz/artworksetting/editProfile.dart';
+import 'package:paletteartz/artworksetting/setting.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/mainProfile.dart';
+import 'package:paletteartz/walletPage/walletPage.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -21,10 +26,18 @@ class _MainMenuState extends State<MainMenu> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _onItemTapped(3); // for testing
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+        backgroundColor: bgBlack,
         appBar: AppBar(
           backgroundColor: bgBlack,
           title: const Text(
@@ -77,23 +90,15 @@ class _MainMenuState extends State<MainMenu> {
         ),
         body: TabBarView(children: [
           //home page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          Homepage(),
           //store page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          Storegift(),
           //add post class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          AddNewPost(),
           //wallet page class
-          Container(
-            child: Text('Add your class replace this container'),
-          ),
+          WalletPage(),
           //profile page class
-         MainProfile(),
+          MainProfile(),
         ]),
       ),
     );
