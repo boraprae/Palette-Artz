@@ -512,7 +512,7 @@ class _PostDetailState extends State<PostDetail> {
                           ),
                         ),
                         Text(
-                          _items.pubDate,
+                          'Published: '+_items.pubDate,
                           style: TextStyle(
                             fontSize: 12,
                             color: grayText,
