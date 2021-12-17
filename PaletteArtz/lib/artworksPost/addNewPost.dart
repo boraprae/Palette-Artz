@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewPost extends StatefulWidget {
   const AddNewPost({Key? key}) : super(key: key);
@@ -20,9 +23,95 @@ class _AddNewPostState extends State<AddNewPost> {
   TextEditingController artTitleController = TextEditingController();
   TextEditingController artDescriptionController = TextEditingController();
   TextEditingController artTagController = TextEditingController();
+  List tags = [];
+  File? _image;
+  var dropdownvalue = 'Select style of arts';
+  String _token = "";
+  late BuildContext _context;
+  // Future<http.Response> upload(String token, { body }) {
+  //   return http.post(
+  //     Uri.parse('http://10.0.2.2:3000/api/uploadArtwork'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //       'Authorization': token,
+  //     },
+  //     body: body,
+  //   );
+  // }
+
+  Future showAlert(String title, String alertMessage) async {
+    await showDialog(
+      context: _context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(alertMessage),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<http.StreamedResponse> uploadImage(filename, url, token) async {
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(await http.MultipartFile.fromPath('image', filename));
+    request.headers['Authorization'] = token;
+    request.fields['title'] = artTitleController.text;
+    request.fields['description'] = artDescriptionController.text;
+    if (dropdownvalue != "Select style of arts") {
+      request.fields['art_type'] = dropdownvalue;
+    }
+    if (tags.length != 0) {
+      request.fields['tags'] = tags.join(',');
+    }
+
+    print(request.fields.entries);
+    var res = await request.send();
+    return res;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+  }
+
+  void uploadArtwork(String token) async {
+    String apiUrl = "http://10.0.2.2:3000/api/uploadArtwork";
+
+    if (_image == null) {
+      return showAlert('Error', 'Please select an image');
+    }
+
+    http.StreamedResponse response =
+        await uploadImage(_image!.path, apiUrl, token);
+
+    String message = await response.stream.bytesToString();
+    print('Response: ' + message);
+    if (response.statusCode > 299) {
+      return showAlert('Error', message);
+    } 
+
+    showAlert('Success', 'Upload complete');
+    setState(() {
+      _image = null;
+    });
+  }
 
   //! dropdown static value
-  var dropdownvalue = 'Select style of arts';
+
   var styleItem = [
     'Select style of arts',
     'Anime & Manga',
@@ -30,14 +119,14 @@ class _AddNewPostState extends State<AddNewPost> {
     'Fantasy',
     'Series Fanart',
     'Game Art',
-    'Ilustration',
+    'Illustration',
     'Digital Art'
   ];
 
   late Map<dynamic, dynamic> imgData;
 
   //! Pick image function
-  File? _image;
+
   Future pickImage() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -71,6 +160,7 @@ class _AddNewPostState extends State<AddNewPost> {
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     Size size = MediaQuery.of(context).size;
     return Container(
       color: bgBlack,
@@ -268,14 +358,18 @@ class _AddNewPostState extends State<AddNewPost> {
                               BorderSide(color: Colors.white, width: 0.5),
                         ),
                       ),
+                      
                       onDelete: (tag) {
-                        print('onDelete: $tag');
+                        tags.remove(tag.toString());
+                        print('onDelete: $tags');
                       },
                       onTag: (tag) {
-                        print('onTag: $tag');
+                        
+                        tags.add(tag.toString());
+                        print('onTag: $tags');
                       },
                       validator: (String tag) {
-                        print('validator: $tag');
+                        print('validator: $tags');
                         if (tag.length > 10) {
                           return "Sorry, you can't longer than that.";
                         }
@@ -295,7 +389,9 @@ class _AddNewPostState extends State<AddNewPost> {
                     //!artDescriptionController
                     //!dropdownvalue
                     //!tag
-                    onPressed: () {},
+                    onPressed: () {
+                      uploadArtwork(_token);
+                    },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(bgBlack),
                         shape: MaterialStateProperty.all(

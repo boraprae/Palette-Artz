@@ -30,16 +30,65 @@ class _HomepageState extends State<Homepage> {
   TextEditingController newComment = TextEditingController();
 
   int _current = 0;
+  String token = "";
+  var channelobject;
+  var artwork;
+  List Channels = [];
+
   final CarouselController _controller = CarouselController();
 
-  List Channels = [
-    //! Array use in Channels
-    {'image': '22.jpg', 'name': 'FANTASY'},
-    {'image': '18.jpg', 'name': 'DIGITAL ART'},
-    {'image': '19.jpg', 'name': 'ILLUSTARATION'},
-    {'image': '20.jpg', 'name': 'GAME ART'},
-    {'image': '21.jpg', 'name': 'SERIES FANART'},
-  ];
+  void initState() {
+    super.initState();
+    gettoken();
+  }
+
+  Future gettoken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userString = await prefs.getString('user');
+    Map userobject = jsonDecode(userString!) as Map<String, dynamic>;
+    print(userobject["token"]);
+    token = userobject["token"];
+    await getapi();
+  }
+
+  Future getapi() async {
+    var channel = await getChannel();
+    // print(channel.body);
+    channelobject = jsonDecode(channel.body) as List<dynamic>;
+    // print(channelobject);
+    setState(() {
+      LoopChannel();
+    });
+  }
+
+
+
+  Future<http.Response> getChannel() {
+    return http.get(Uri.parse('http://10.0.2.2:3000/api/homepage/channel'),
+        headers: <String, String>{
+          // 'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': token,
+
+          // body: jsonEncode(<String,Sting>{
+          //   'id':
+          //   'type_name': 'name',
+          //   'password': passwordTextField.text
+          // }),
+        });
+  }
+  
+  void LoopChannel() {
+    for (int i = 0; i < channelobject.length; i++) {
+      Channels.add(
+        {
+          'id': channelobject[i]["id"],
+          'name': channelobject[i]["type_name"],
+          'image': 'http://10.0.2.2:3000' + channelobject[i]["type_image_path"]
+        },
+      );
+    }
+  }
+
 
   @override
   void initState() {
@@ -184,8 +233,8 @@ class _HomepageState extends State<Homepage> {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(
-              'assets/img/uploadedImg/' + Channels[index]['image'],
+            image: NetworkImage(
+              Channels[index]['image'],
             ),
             colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.5), BlendMode.dstATop),
