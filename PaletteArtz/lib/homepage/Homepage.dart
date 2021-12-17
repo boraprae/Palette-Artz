@@ -71,20 +71,7 @@ class _HomepageState extends State<Homepage> {
           // }),
         });
   }
-
-  Future<http.Response> getArtWork() {
-    return http.get(Uri.parse('http://10.0.2.2:3000/api/homepage/artworks'),
-        headers: <String, String>{
-          // 'Content-Type': 'application/json; charset=UTF-8',
-          // 'Authorization': token,
-          // body: jsonEncode(<String,Sting>{
-          //   'id':
-          //   'type_name': 'name',
-          //   'password': passwordTextField.text
-          // }),
-        });
-  }
-
+  
   void LoopChannel() {
     for (int i = 0; i < channelobject.length; i++) {
       Channels.add(
