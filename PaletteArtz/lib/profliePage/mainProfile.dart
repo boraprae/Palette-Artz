@@ -295,7 +295,7 @@ class _MainProfileState extends State<MainProfile> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const PostDetail(),
+                                                  PostDetail(),
                                               settings: RouteSettings(
                                                   arguments: _items[index]),
                                             ),

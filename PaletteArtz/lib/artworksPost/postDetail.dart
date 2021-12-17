@@ -26,15 +26,6 @@ class _PostDetailState extends State<PostDetail> {
     getToken();
   }
 
-  void getToken() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? userString = await pref.getString('user');
-
-    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
-    _token = userObject['token'];
-    getUserDataAPI(_token);
-  }
-
   void getUserDataAPI(String token) async {
     http.Response userInfoResponse = await getUserInfo(token);
 
@@ -70,7 +61,6 @@ class _PostDetailState extends State<PostDetail> {
   String totalComment = '0';
   String totalLikes = '1.2k';
   String username = 'SaraYune';
-  String _token = "";
   var _userGiftData;
   //!------- List of items(Update after connect to the db) ------!
   List giftStore = [
@@ -191,14 +181,7 @@ class _PostDetailState extends State<PostDetail> {
 
     setState(() {});
   }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getToken();
-  }
-
+  
   void getName(String name, int id) {
     setState(() {
       itemName = name;
