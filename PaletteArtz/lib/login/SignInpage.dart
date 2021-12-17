@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:http/http.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:paletteartz/mainMenu.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
