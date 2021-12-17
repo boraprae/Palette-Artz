@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:paletteartz/constantColor.dart';
 import 'package:paletteartz/profliePage/shared/listImg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class PostDetail extends StatefulWidget {
   const PostDetail({Key? key}) : super(key: key);
@@ -12,6 +16,41 @@ class PostDetail extends StatefulWidget {
 class _PostDetailState extends State<PostDetail> {
   TextEditingController newComment = TextEditingController();
   int _selectedIndex = 0;
+  String _token = '';
+  var userInfoList;
+
+  @override
+  void initState() {
+    super.initState();
+    getToken();
+  }
+
+  void getToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userString = await pref.getString('user');
+
+    var userObject = jsonDecode(userString!) as Map<String, dynamic>;
+    _token = userObject['token'];
+    getUserDataAPI(_token);
+  }
+
+  void getUserDataAPI(String token) async {
+    http.Response userInfoResponse = await getUserInfo(token);
+
+    setState(() {
+      userInfoList = jsonDecode(userInfoResponse.body);
+    });
+  }
+
+  Future<http.Response> getUserInfo(String token) {
+    return http.get(
+      Uri.parse('http://10.0.2.2:3000/api/profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
+    );
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -486,16 +525,16 @@ class _PostDetailState extends State<PostDetail> {
                     child: Row(
                       children: [
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             //!-------- Paste code for go to another profile here ----
+                            print('Waiting for view another profile');
                           },
                           child: Row(
                             children: [
+                              //!--- User profile here
                               CircleAvatar(
                                 radius: 10.0,
-                                backgroundImage: AssetImage(
-                                  'assets/img/winter.jpg',
-                                ),
+                                backgroundImage: NetworkImage('http://10.0.2.2:3000' + userInfoList['profile_image']),
                               ),
                               Padding(
                                 padding:
@@ -512,7 +551,7 @@ class _PostDetailState extends State<PostDetail> {
                           ),
                         ),
                         Text(
-                          'Published: '+_items.pubDate,
+                          'Published: ' + _items.pubDate,
                           style: TextStyle(
                             fontSize: 12,
                             color: grayText,
