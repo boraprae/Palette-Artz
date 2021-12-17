@@ -196,7 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Please type your email and password first'),
+                              Text('Please type your email and password first.'),
                             ],
                           ),
                         );
